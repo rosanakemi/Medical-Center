@@ -60,7 +60,9 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 204));
         jLabel2.setText("Senha");
 
-        Usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Usuario.setBackground(new java.awt.Color(255, 255, 255));
+        Usuario.setFont(new java.awt.Font("Verdana", 0, 16)); // NOI18N
+        Usuario.setForeground(new java.awt.Color(51, 51, 51));
         Usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         Usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,8 +70,14 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        senha.setBackground(new java.awt.Color(255, 255, 255));
+        senha.setFont(new java.awt.Font("Verdana", 0, 16)); // NOI18N
+        senha.setForeground(new java.awt.Color(51, 51, 51));
         senha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
 
+        mostrarSenha.setBackground(new java.awt.Color(255, 255, 255));
+        mostrarSenha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        mostrarSenha.setForeground(new java.awt.Color(51, 51, 51));
         mostrarSenha.setText("Mostrar senha");
 
         BotaoEntrar.setBackground(new java.awt.Color(0, 0, 204));
@@ -134,7 +142,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(mostrarSenha)
                 .addGap(18, 18, 18)
                 .addComponent(BotaoEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         logo.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\medical center.png")); // NOI18N
