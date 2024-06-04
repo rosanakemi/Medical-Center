@@ -33,8 +33,6 @@ public class Home extends javax.swing.JFrame {
         btnPaciente = new javax.swing.JToggleButton();
         btnMedico = new javax.swing.JToggleButton();
         btnConsulta = new javax.swing.JToggleButton();
-        btnAvaliacao = new javax.swing.JToggleButton();
-        btnSair = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -53,6 +51,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/logoofc1.png"))); // NOI18N
         jLabel4.setText("jLabel4");
 
         btnAgenda.setBackground(new java.awt.Color(255, 255, 255));
@@ -88,20 +87,6 @@ public class Home extends javax.swing.JFrame {
         btnConsulta.setText(" Consulta");
         btnConsulta.setBorder(null);
 
-        btnAvaliacao.setBackground(new java.awt.Color(255, 255, 255));
-        btnAvaliacao.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnAvaliacao.setForeground(new java.awt.Color(51, 51, 51));
-        btnAvaliacao.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\avaliacao.png")); // NOI18N
-        btnAvaliacao.setText(" Avaliação");
-        btnAvaliacao.setBorder(null);
-
-        btnSair.setBackground(new java.awt.Color(255, 255, 255));
-        btnSair.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnSair.setForeground(new java.awt.Color(51, 51, 51));
-        btnSair.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\sair.png")); // NOI18N
-        btnSair.setText("    Sair");
-        btnSair.setBorder(null);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -112,9 +97,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(btnAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnAvaliacao, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-            .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,10 +112,6 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(btnMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -346,13 +325,11 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TextPesquisar;
     private javax.swing.JButton btnAgenda;
-    private javax.swing.JToggleButton btnAvaliacao;
     private javax.swing.JToggleButton btnConsulta;
     private javax.swing.JButton btnEditar;
     private javax.swing.JToggleButton btnMedico;
     private javax.swing.JButton btnNovo;
     private javax.swing.JToggleButton btnPaciente;
-    private javax.swing.JToggleButton btnSair;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
