@@ -83,9 +83,14 @@ public class Home extends javax.swing.JFrame {
         btnConsulta.setBackground(new java.awt.Color(255, 255, 255));
         btnConsulta.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnConsulta.setForeground(new java.awt.Color(51, 51, 51));
-        btnConsulta.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\recepcao.png")); // NOI18N
-        btnConsulta.setText(" Consulta");
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/homem-de-negocios.png"))); // NOI18N
+        btnConsulta.setText(" Usúario");
         btnConsulta.setBorder(null);
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -286,6 +291,10 @@ public class Home extends javax.swing.JFrame {
     private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lupaActionPerformed
+
+    private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultaActionPerformed
 
     /**
      * @param args the command line arguments
