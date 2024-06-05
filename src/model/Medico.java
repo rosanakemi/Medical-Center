@@ -4,10 +4,58 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author zanna
  */
-public class Medico {
+public class Medico extends Pessoa {
+    
+    private int id;
+    private String CRM;
+    private Usuario usuario;
+    private ArrayList<EspecialidadeMedica> especialidades;
+    
+    public Medico(int id, String nome, String cpf, Date data_de_nascimento, String idade) {
+        super(id, nome, cpf, data_de_nascimento, idade);
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCRM() {
+        return this.CRM;
+    }
+
+    public void setCRM(String CRM) {
+        this.CRM = CRM;
+    }
+
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public ArrayList<EspecialidadeMedica> getEspecialidades() {
+        return this.especialidades;
+    }
+
+    public void setEspecialidades(ArrayList<EspecialidadeMedica> especialidades) {
+        this.especialidades = especialidades;
+    }
+    
+    
+
+    
     
 }
