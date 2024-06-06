@@ -11,12 +11,12 @@ package model;
 public class Usuario {
     
     private int id;
-    private String usuario;
+    private String login;
     private String senha;
     
-    public Usuario(int id, String usuario, String senha){
+    public Usuario(int id, String login, String senha){
         this.id = id;
-        this.usuario = usuario;
+        this.login = login;
         this.senha = senha;
     }
     
@@ -28,12 +28,12 @@ public class Usuario {
         this.id = id;
     }
     
-    public String getUsuario(){
-        return this.usuario;
+    public String getLogin(){
+        return this.login;
     }
     
-    public void setUsuario (String usuario){
-        this.usuario = usuario;
+    public void setLogin (String login){
+        this.login = login;
     }
     
     public String getSenha(){

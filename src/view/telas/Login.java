@@ -1,10 +1,13 @@
 package view.telas;
 
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import services.AutenticacaoServico;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author zanna
@@ -32,7 +35,7 @@ public class Login extends javax.swing.JFrame {
         titulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Usuario = new javax.swing.JTextField();
+        login = new javax.swing.JTextField();
         senha = new javax.swing.JPasswordField();
         mostrarSenha = new javax.swing.JCheckBox();
         BotaoEntrar = new javax.swing.JButton();
@@ -60,13 +63,13 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 204));
         jLabel2.setText("Senha");
 
-        Usuario.setBackground(new java.awt.Color(255, 255, 255));
-        Usuario.setFont(new java.awt.Font("Verdana", 0, 16)); // NOI18N
-        Usuario.setForeground(new java.awt.Color(51, 51, 51));
-        Usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
-        Usuario.addActionListener(new java.awt.event.ActionListener() {
+        login.setBackground(new java.awt.Color(255, 255, 255));
+        login.setFont(new java.awt.Font("Verdana", 0, 16)); // NOI18N
+        login.setForeground(new java.awt.Color(51, 51, 51));
+        login.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
+        login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsuarioActionPerformed(evt);
+                loginActionPerformed(evt);
             }
         });
 
@@ -79,11 +82,21 @@ public class Login extends javax.swing.JFrame {
         mostrarSenha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         mostrarSenha.setForeground(new java.awt.Color(51, 51, 51));
         mostrarSenha.setText("Mostrar senha");
+        mostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarSenhaActionPerformed(evt);
+            }
+        });
 
         BotaoEntrar.setBackground(new java.awt.Color(0, 0, 204));
         BotaoEntrar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         BotaoEntrar.setForeground(new java.awt.Color(255, 255, 255));
         BotaoEntrar.setText("Entrar");
+        BotaoEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoEntrarActionPerformed(evt);
+            }
+        });
 
         icone.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\homem-de-negocios.png")); // NOI18N
 
@@ -107,7 +120,7 @@ public class Login extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
-                            .addComponent(Usuario)
+                            .addComponent(login)
                             .addComponent(senha, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                             .addComponent(mostrarSenha)
                             .addComponent(jLabel2)))
@@ -129,7 +142,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(icone, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -181,9 +194,37 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UsuarioActionPerformed
+    }//GEN-LAST:event_loginActionPerformed
+
+    private void BotaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEntrarActionPerformed
+       if(login.getText().isEmpty()){
+         JOptionPane.showMessageDialog(null, "Campo de login vazio");  
+         login.requestFocus();
+         return;
+       }
+       if(senha.getText().isEmpty()){
+         JOptionPane.showMessageDialog(null, "Campo de senha vazio");  
+         senha.requestFocus();
+         return;
+       }
+        AutenticacaoServico auth = new AutenticacaoServico();
+        if (auth.autenticar(login.getText(), senha.getText())) {
+            JOptionPane.showMessageDialog(null, "Logado no sistema");
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario nao encontrado no sistema");
+        }
+
+    }//GEN-LAST:event_BotaoEntrarActionPerformed
+
+    private void mostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarSenhaActionPerformed
+        if (((JCheckBox) evt.getSource()).isSelected()) {
+            senha.setEchoChar((char) 0);
+        } else {
+            senha.setEchoChar('*');
+        }
+    }//GEN-LAST:event_mostrarSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,13 +263,13 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoEntrar;
-    private javax.swing.JTextField Usuario;
     private javax.swing.JLabel icone;
     private javax.swing.JLabel icone2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField login;
     private javax.swing.JLabel logo;
     private javax.swing.JCheckBox mostrarSenha;
     private javax.swing.JPasswordField senha;
