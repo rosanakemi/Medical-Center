@@ -15,11 +15,11 @@ public class Agendamento {
     private int id;
     private Paciente paciente;
     private Medico medico;
-    private EspecialidadeMedica especialidade;
+    private String especialidade;
     private Date data;
     private String Hora;
     
-    public Agendamento(int id, Paciente paciente, Medico medico, EspecialidadeMedica especialidade, Date data, String Hora){
+    public Agendamento(int id, Paciente paciente, Medico medico, String especialidade, Date data, String Hora){
         this.id = id;
         this.paciente = paciente;
         this.medico = medico;
@@ -52,11 +52,11 @@ public class Agendamento {
         this.medico = medico;
     }
 
-    public EspecialidadeMedica getEspecialidade() {
+    public String getEspecialidade() {
         return especialidade;
     }
 
-    public void setEspecialidade(EspecialidadeMedica especialidade) {
+    public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
 

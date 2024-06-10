@@ -199,29 +199,40 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginActionPerformed
 
     private void BotaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEntrarActionPerformed
-       if(login.getText().isEmpty()){
+        // Verifica se o campo de login está vazio
+        if(login.getText().isEmpty()){
+            // Exibe uma mensagem de alerta informando que o campo de login está vazio
          JOptionPane.showMessageDialog(null, "Campo de login vazio");  
+         // Define o foco no campo de login para o usuário preencher
          login.requestFocus();
-         return;
+         return; // Sai do método, pois a validação falhou
        }
+        //Mesma logica a cima, so que no campo senha.
        if(senha.getText().isEmpty()){
          JOptionPane.showMessageDialog(null, "Campo de senha vazio");  
          senha.requestFocus();
          return;
        }
+       // Cria uma instância do serviço de autenticação
         AutenticacaoServico auth = new AutenticacaoServico();
+        // Chama o método de autenticação passando os valores dos campos de login e senha
         if (auth.autenticar(login.getText(), senha.getText())) {
+            // Se a autenticação for bem-sucedida, exibe uma mensagem informando que o usuário está logado
             JOptionPane.showMessageDialog(null, "Logado no sistema");
         } else {
+            // Se a autenticação falhar, exibe uma mensagem informando que o usuário não foi encontrado
             JOptionPane.showMessageDialog(null, "Usuario nao encontrado no sistema");
         }
 
     }//GEN-LAST:event_BotaoEntrarActionPerformed
 
     private void mostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarSenhaActionPerformed
+        // Verifica se o evento foi disparado por um JCheckBox e se ele está selecionado
         if (((JCheckBox) evt.getSource()).isSelected()) {
+             // Se o checkbox estiver selecionado, define o caractere de echo do campo de senha como 0 (sem máscara)
             senha.setEchoChar((char) 0);
         } else {
+            // Se o checkbox não estiver selecionado, define o caractere de echo do campo de senha como '*'
             senha.setEchoChar('*');
         }
     }//GEN-LAST:event_mostrarSenhaActionPerformed

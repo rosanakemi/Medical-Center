@@ -4,7 +4,6 @@
  */
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,9 +15,9 @@ public class Medico extends Pessoa {
     private int id;
     private String CRM;
     private Usuario usuario;
-    private ArrayList<EspecialidadeMedica> especialidades;
+    private String especialidades;
     
-    public Medico(int id, String nome, String cpf, Date data_de_nascimento, String idade) {
+    public Medico(int id, String nome, String cpf, Date data_de_nascimento, String idade, String CRM, String usuario, String especialidades) {
         super(id, nome, cpf, data_de_nascimento, idade);
     }
 
@@ -46,16 +45,12 @@ public class Medico extends Pessoa {
         this.usuario = usuario;
     }
 
-    public ArrayList<EspecialidadeMedica> getEspecialidades() {
+    public String getEspecialidades() {
         return this.especialidades;
     }
 
-    public void setEspecialidades(ArrayList<EspecialidadeMedica> especialidades) {
+    public void setEspecialidades(String especialidades) {
         this.especialidades = especialidades;
     }
-    
-    
-
-    
     
 }
