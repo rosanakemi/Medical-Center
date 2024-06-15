@@ -309,7 +309,7 @@ public class Home extends javax.swing.JFrame {
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
          this.dispose();
                 // Instancia e exibe a tela principal
-            CadastroPaciente cadastroPaciente = new CadastroPaciente();
+            DadosPaciente cadastroPaciente = new DadosPaciente(null);
             cadastroPaciente.setVisible(true);
     }//GEN-LAST:event_btnPacienteActionPerformed
 

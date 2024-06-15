@@ -11,7 +11,6 @@ import java.util.Date;
  * @author zanna
  */
 public class Paciente extends Pessoa { 
-    private int id;
     private String numeroSUS;
     private String email;
     private String telefone;
@@ -23,14 +22,6 @@ public class Paciente extends Pessoa {
         this.email = email;
         this.telefone = telefone;
         this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNumeroSUS() {

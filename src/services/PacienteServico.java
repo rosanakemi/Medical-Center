@@ -7,6 +7,7 @@ package services;
 import dao.repository.PacienteRepositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import model.Paciente;
 
@@ -15,6 +16,22 @@ import model.Paciente;
  * @author zanna
  */
 public class PacienteServico {
+    
+    public ArrayList<Paciente> consultarTodos(){
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        return repositorio.obterTodos();
+    }
+    
+    public Paciente consultarPorId(int id){
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        return repositorio.obterPorId(id);
+    }
+    
+    public ArrayList<Paciente> filtrar(String nome){
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        return repositorio.obterPorNome(nome);
+    }
+    
     public boolean cadastrar(String nome, String cpf, String data_de_nascimento, String numeroSus, String email, String telefone, String status) throws ParseException{
         PacienteRepositorio repositorio = new PacienteRepositorio();
         
@@ -29,6 +46,36 @@ public class PacienteServico {
         }
         
         repositorio.salvar(paciente);
+        return true;
+    }
+    
+    public boolean atualizar(int id,String nome, String cpf, String data_de_nascimento, String numeroSus, String email, String telefone, String status) throws ParseException{
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataFormatter = formatter.parse(data_de_nascimento);
+        
+        Paciente paciente = repositorio.obterPorId(id);
+        paciente.setNome(nome);
+        paciente.setCpf(cpf);
+        paciente.setData_de_nascimento(dataFormatter);
+        paciente.setNumeroSUS(numeroSus);
+        paciente.setEmail(email);
+        paciente.setTelefone(telefone);
+        paciente.setStatus(status);
+        
+        if(paciente.getIdade() >= 120){
+            return false;
+        }
+        
+        repositorio.atualizar(paciente);
+        return true;
+    }
+    
+    public boolean deletar(int id){
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        repositorio.excluir(id);
         return true;
     }
 }
