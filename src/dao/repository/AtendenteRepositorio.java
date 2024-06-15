@@ -13,39 +13,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Agendamento;
-import model.Medico;
-import model.Paciente;
+import model.Atendente;
 
 /**
  *
  * @author zanna
  */
-public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
+public class AtendenteRepositorio implements IRepositorio<Atendente> {
 
     @Override
-    public Agendamento obterPorId(int id) {
-        PacienteRepositorio pacienteRepo = new PacienteRepositorio();
-        MedicoRepositorio medicoRepo = new MedicoRepositorio();
-
+    public Atendente obterPorId(int id) {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        Agendamento agendamento = null; // Inicializar
+        Atendente atendente = null; // Inicializa o atenndente nulo
 
-        // pecorre sobre os resultados da consulta
         try {
-            stmt = con.prepareStatement("SELECT * FROM agendamento WHERE id_agendamento = ?");// Prepara a consulta SQL
+            stmt = con.prepareStatement("SELECT * FROM atendente WHERE id_atendente = ?");// Prepara a consulta SQL
+            stmt.setInt(0, id);
             rs = stmt.executeQuery(); // Executa a consulta
 
-            if (rs.next()) {
-                int ag_id = rs.getInt("id");
-                Paciente ag_paciente = pacienteRepo.obterPorId(rs.getInt("paciente"));
-                Medico ag_medico = medicoRepo.obterPorId(rs.getInt("medico"));
-                Date ag_data = rs.getDate("data");
-                String ag_Hora = rs.getString("Hora");
-                agendamento = new Agendamento(ag_id, ag_paciente, ag_medico, ag_data, ag_Hora);
+            if (rs.next()) { // Pega a primeira linha
+                int at_id = rs.getInt("id_atendente");
+                String at_nome = rs.getString("nome");
+                String at_cpf = rs.getString("cpf");
+                String at_telefone = rs.getString("telefone");
+                String at_email = rs.getString("email");
+                Date at_data_nascimento = rs.getDate("data_nascimento");
+                atendente = new Atendente(at_id, at_nome, at_cpf, at_data_nascimento, at_telefone, at_email);
             }
 
         } catch (SQLException ex) {
@@ -54,37 +50,31 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
             ConnectionFactory.closeConnection(con, stmt, rs); // Fecha a conexão, o PreparedStatement e o ResultSet
         }
 
-        return agendamento; // Retorna agendamento
+        return atendente; // Retorna um atendente
     }
 
-    /**
-     * Obtém todos os usuários do banco de dados.
-     *
-     */
     @Override
-    public ArrayList<Agendamento> obterTodos() {
-        PacienteRepositorio pacienteRepo = new PacienteRepositorio();
-        MedicoRepositorio medicoRepo = new MedicoRepositorio();
-
+    public ArrayList<Atendente> obterTodos() {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        ArrayList<Agendamento> agendamentos = new ArrayList<>(); // Lista para armazenar os agendamentos
+        ArrayList<Atendente> atendentes = new ArrayList<>(); // Lista para armazenar os pacientes
 
         // pecorre sobre os resultados da consulta
         try {
-            stmt = con.prepareStatement("SELECT * FROM agendamento");// Prepara a consulta SQL
+            stmt = con.prepareStatement("SELECT * FROM atendente");// Prepara a consulta SQL
             rs = stmt.executeQuery(); // Executa a consulta
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                Paciente paciente = pacienteRepo.obterPorId(rs.getInt("paciente"));
-                Medico medico = medicoRepo.obterPorId(rs.getInt("medico"));
-                Date data = rs.getDate("data");
-                String Hora = rs.getString("Hora");
-                Agendamento agendamento = new Agendamento(id, paciente, medico, data, Hora); // Cria um agendamento
-                agendamentos.add(agendamento); // Adiciona um agendamento à lista
+                int at_id = rs.getInt("id_atendente");
+                String at_nome = rs.getString("nome");
+                String at_cpf = rs.getString("cpf");
+                String at_telefone = rs.getString("telefone");
+                String at_email = rs.getString("email");
+                Date at_data_nascimento = rs.getDate("data_nascimento");
+                Atendente atendente = new Atendente(at_id, at_nome, at_cpf, at_data_nascimento, at_telefone, at_email);
+                atendentes.add(atendente);
             }
 
         } catch (SQLException ex) {
@@ -93,19 +83,21 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
             ConnectionFactory.closeConnection(con, stmt, rs); // Fecha a conexão, o PreparedStatement e o ResultSet
         }
 
-        return agendamentos; // Retorna a lista de agendamento.
+        return atendentes; // Retorna a lista de atendente
     }
 
     @Override
-    public void salvar(Agendamento obj) {
+    public void salvar(Atendente obj) {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO agendamento (paciente_id, medico_id, data_hora) VALUES (?, ?, ?)");// Prepara a consulta SQL
-            stmt.setInt(0, obj.getPaciente().getId());
-            stmt.setInt(1, obj.getMedico().getId());
-            stmt.setDate(2, (java.sql.Date) obj.getData());
+            stmt = con.prepareStatement("INSERT INTO atendente (nome,cpf,telefone,email,data_nascimento) VALUES(?,?,?,?,?)");// Prepara a consulta SQL
+            stmt.setString(0, obj.getNome());
+            stmt.setString(1, obj.getCpf());
+            stmt.setString(2, obj.getTelefone());
+            stmt.setString(3, obj.getEmail());
+            stmt.setDate(4, (java.sql.Date) obj.getData_de_nascimento());
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
@@ -115,22 +107,25 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
     }
 
     @Override
-    public void atualizar(Agendamento obj) {
+    public void atualizar(Atendente obj) {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE agendamento SET paciente_id = ?, medico_id = ?, data_hora = ? WHERE id_agendamento = ?");// Prepara a consulta SQL
-            stmt.setInt(1, obj.getPaciente().getId());
-            stmt.setInt(2, obj.getMedico().getId());
-            stmt.setDate(3, (java.sql.Date) obj.getData());
-            stmt.setInt(0, obj.getId());    
+            stmt = con.prepareStatement("UPDATE atendente SET nome = ? , cpf = ?, telefone = ?, email = ? , data_nascimento = ? WHERE id_atendente = ?");// Prepara a consulta SQL
+            stmt.setString(0, obj.getNome());
+            stmt.setString(1, obj.getCpf());
+            stmt.setString(2, obj.getTelefone());
+            stmt.setString(3, obj.getEmail());
+            stmt.setDate(4, (java.sql.Date) obj.getData_de_nascimento());
+            stmt.setInt(5, obj.getId());
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
         } finally {
             ConnectionFactory.closeConnection(con, stmt); // Fecha a conexão, o PreparedStatement
         }
+
     }
 
     @Override
@@ -139,7 +134,7 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("DELETE FROM agendamento WHERE id_agendamento = ?");// Prepara a consulta SQL
+            stmt = con.prepareStatement("DELETE FROM atendente WHERE id_atendente = ?");// Prepara a consulta SQL
             stmt.setInt(0, id);
             stmt.execute();
         } catch (SQLException ex) {
@@ -148,5 +143,4 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
             ConnectionFactory.closeConnection(con, stmt); // Fecha a conexão, o PreparedStatement
         }
     }
-
 }

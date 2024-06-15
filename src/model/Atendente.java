@@ -11,12 +11,17 @@ import java.util.Date;
  * @author zanna
  */
 public class Atendente extends Pessoa {
+
     
     private int id;
-    private Usuario usuario;
+    private String telefone;
+    private String email;
     
-    public Atendente(int id, String nome, String cpf, Date data_de_nascimento, String idade) {
-        super(id, nome, cpf, data_de_nascimento, idade);
+    public Atendente(int id, String nome, String cpf, Date data_de_nascimento,String telefone, String email) {
+        super(id, nome, cpf, data_de_nascimento);
+        this.telefone = telefone;
+        this.email = email;
+        
     }
     
     public int getId(){
@@ -26,12 +31,32 @@ public class Atendente extends Pessoa {
     public void setId (int id){
         this.id = id;
     }
-    
-    public Usuario getUsuario(){
-        return this.usuario;
+      
+    /**
+     * @return the telefone
+     */
+    public String getTelefone() {
+        return telefone;
     }
-    
-    public void setUsuario (Usuario usuario){
-        this.usuario = usuario;
+
+    /**
+     * @param telefone the telefone to set
+     */
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
