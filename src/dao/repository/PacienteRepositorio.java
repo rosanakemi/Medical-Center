@@ -97,14 +97,14 @@ public class PacienteRepositorio implements IRepositorio<Paciente> {
 
         try {
             stmt = con.prepareStatement("INSERT INTO paciente (nome, cpf, data_nascimento, cartaoSus, telefone, email, status) VALUES (?,?,?,?,?,?,?)");// Prepara a consulta SQL
-            stmt.setString(0, obj.getNome());
-            stmt.setString(1, obj.getCpf());
-            stmt.setDate(2, (java.sql.Date) obj.getData_de_nascimento());
-            stmt.setString(3, obj.getNumeroSUS());
-            stmt.setString(4, obj.getTelefone());
-            stmt.setString(5, obj.getEmail());
-            stmt.setString(6, obj.getStatus());
-            stmt.execute();
+            stmt.setString(1, obj.getNome());
+            stmt.setString(2, obj.getCpf());
+            stmt.setDate(3, new java.sql.Date(obj.getData_de_nascimento().getTime()));
+            stmt.setString(4, obj.getNumeroSUS());
+            stmt.setString(5, obj.getTelefone());
+            stmt.setString(6, obj.getEmail());
+            stmt.setString(7, obj.getStatus());
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
         } finally {
@@ -119,14 +119,14 @@ public class PacienteRepositorio implements IRepositorio<Paciente> {
 
         try {
             stmt = con.prepareStatement("UPDATE paciente SET nome = ? cpf = ? data_nascimento = ? cartaoSus = ? telefone = ? email = ? status = ? WHERE id_paciente = ?");// Prepara a consulta SQL
-            stmt.setString(0, obj.getNome());
-            stmt.setString(1, obj.getCpf());
-            stmt.setDate(2, (java.sql.Date) obj.getData_de_nascimento());
-            stmt.setString(3, obj.getNumeroSUS());
-            stmt.setString(4, obj.getTelefone());
-            stmt.setString(5, obj.getEmail());
-            stmt.setString(6, obj.getStatus());
-            stmt.setInt(7, obj.getId());
+            stmt.setString(1, obj.getNome());
+            stmt.setString(2, obj.getCpf());
+            stmt.setDate(3, (java.sql.Date) obj.getData_de_nascimento());
+            stmt.setString(4, obj.getNumeroSUS());
+            stmt.setString(5, obj.getTelefone());
+            stmt.setString(6, obj.getEmail());
+            stmt.setString(7, obj.getStatus());
+            stmt.setInt(8, obj.getId());
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro

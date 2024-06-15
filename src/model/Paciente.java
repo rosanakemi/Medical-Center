@@ -10,8 +10,7 @@ import java.util.Date;
  *
  * @author zanna
  */
-public class Paciente extends Pessoa {
-    
+public class Paciente extends Pessoa { 
     private int id;
     private String numeroSUS;
     private String email;

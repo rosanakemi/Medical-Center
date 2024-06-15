@@ -4,7 +4,11 @@
  */
 package view.telas;
 
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import services.PacienteServico;
 
 /**
  *
@@ -37,15 +41,15 @@ public class CadastroPaciente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        nome = new javax.swing.JTextField();
-        cpf = new javax.swing.JTextField();
-        dataNascimento = new javax.swing.JTextField();
-        cartaoSus = new javax.swing.JTextField();
-        email = new javax.swing.JTextField();
-        telefone = new javax.swing.JTextField();
-        status = new javax.swing.JComboBox<>();
+        botao_cadastrar = new javax.swing.JButton();
+        botao_cancelar = new javax.swing.JButton();
+        campo_nome = new javax.swing.JTextField();
+        campo_cpf = new javax.swing.JTextField();
+        campo_datanascimento = new javax.swing.JTextField();
+        campo_cartaosus = new javax.swing.JTextField();
+        campo_email = new javax.swing.JTextField();
+        campo_telefone = new javax.swing.JTextField();
+        combo_situacao = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,54 +93,54 @@ public class CadastroPaciente extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Situação:");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 204));
-        jButton1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botao_cadastrar.setBackground(new java.awt.Color(0, 0, 204));
+        botao_cadastrar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        botao_cadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        botao_cadastrar.setText("Cadastrar");
+        botao_cadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botao_cadastrarActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(51, 0, 204));
-        jButton2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botao_cancelar.setBackground(new java.awt.Color(51, 0, 204));
+        botao_cancelar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        botao_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        botao_cancelar.setText("Cancelar");
+        botao_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botao_cancelarActionPerformed(evt);
             }
         });
 
-        nome.setBackground(new java.awt.Color(255, 255, 255));
-        nome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        nome.setForeground(new java.awt.Color(51, 51, 51));
+        campo_nome.setBackground(new java.awt.Color(255, 255, 255));
+        campo_nome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_nome.setForeground(new java.awt.Color(51, 51, 51));
 
-        cpf.setBackground(new java.awt.Color(255, 255, 255));
-        cpf.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        cpf.setForeground(new java.awt.Color(51, 51, 51));
+        campo_cpf.setBackground(new java.awt.Color(255, 255, 255));
+        campo_cpf.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_cpf.setForeground(new java.awt.Color(51, 51, 51));
 
-        dataNascimento.setBackground(new java.awt.Color(255, 255, 255));
-        dataNascimento.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        dataNascimento.setForeground(new java.awt.Color(51, 51, 51));
+        campo_datanascimento.setBackground(new java.awt.Color(255, 255, 255));
+        campo_datanascimento.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_datanascimento.setForeground(new java.awt.Color(51, 51, 51));
 
-        cartaoSus.setBackground(new java.awt.Color(255, 255, 255));
-        cartaoSus.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        cartaoSus.setForeground(new java.awt.Color(51, 51, 51));
+        campo_cartaosus.setBackground(new java.awt.Color(255, 255, 255));
+        campo_cartaosus.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_cartaosus.setForeground(new java.awt.Color(51, 51, 51));
 
-        email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        email.setForeground(new java.awt.Color(51, 51, 51));
+        campo_email.setBackground(new java.awt.Color(255, 255, 255));
+        campo_email.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_email.setForeground(new java.awt.Color(51, 51, 51));
 
-        telefone.setBackground(new java.awt.Color(255, 255, 255));
-        telefone.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        telefone.setForeground(new java.awt.Color(51, 51, 51));
+        campo_telefone.setBackground(new java.awt.Color(255, 255, 255));
+        campo_telefone.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_telefone.setForeground(new java.awt.Color(51, 51, 51));
 
-        status.setBackground(new java.awt.Color(255, 255, 255));
-        status.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        status.setForeground(new java.awt.Color(51, 51, 51));
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo", " " }));
+        combo_situacao.setBackground(new java.awt.Color(255, 255, 255));
+        combo_situacao.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        combo_situacao.setForeground(new java.awt.Color(51, 51, 51));
+        combo_situacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo", " " }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -156,23 +160,23 @@ public class CadastroPaciente extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nome)
+                            .addComponent(campo_nome)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campo_datanascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cartaoSus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                                        .addComponent(cpf, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(campo_cartaosus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                                        .addComponent(campo_cpf, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(campo_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(combo_situacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 48, Short.MAX_VALUE)))
                         .addGap(51, 51, 51))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(botao_cadastrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botao_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -181,35 +185,35 @@ public class CadastroPaciente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(dataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_datanascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cartaoSus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_cartaosus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combo_situacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botao_cadastrar)
+                    .addComponent(botao_cancelar))
                 .addGap(20, 20, 20))
         );
 
@@ -244,77 +248,85 @@ public class CadastroPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-                    this.dispose();
-                // Instancia e exibe a tela principal
-            Home home = new Home();
-            home.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void botao_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cancelarActionPerformed
+        this.dispose();
+        // Instancia e exibe a tela principal
+        Home home = new Home();
+        home.setVisible(true);
+    }//GEN-LAST:event_botao_cancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        {                                            
-        // Verifica se o campo de login está vazio
-        if(nome.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo de login está vazio
-         JOptionPane.showMessageDialog(null, "Campo nome vazio");  
-         // Define o foco no campo de nome para o usuário preencher
-         nome.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-         if(cpf.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo de login está vazio
-         JOptionPane.showMessageDialog(null, "Campo CPF vazio");  
-         // Define o foco no campo de CPF para o usuário preencher
-         cpf.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-         
-          if(dataNascimento.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo  está vazio
-         JOptionPane.showMessageDialog(null, "Campo data de Nascimento vazio");  
-         // Define o foco no campo de dataNascimento para o usuário preencher
-         dataNascimento.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-          
-           if(cartaoSus.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo cartaoSus vazio");  
-         // Define o foco no campo de cartaoSus para o usuário preencher
-         cartaoSus.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-           
-            if(email.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo email vazio");  
-         // Define o foco no campo de email para o usuário preencher
-         email.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-            
-             if(telefone.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo telefone vazio");  
-         // Define o foco no campo de telefone para o usuário preencher
-         telefone.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-        //Mesma logica a cima, so que no campo senha.
-       
-       
-        // Chama o método de autenticação passando os valores dos campos de login e senha
-        if ((!nome.getText().isEmpty()) && (!cpf.getText().isEmpty()) && (!dataNascimento.getText().isEmpty()) && (!cartaoSus.getText().isEmpty()) && (!email.getText().isEmpty()) && (!telefone.getText().isEmpty())) {
-            // Se a autenticação for bem-sucedida, exibe uma mensagem informando que o usuário está logado
-            JOptionPane.showMessageDialog(null, "cadastrado no sistema");
-            this.dispose();
-            Home home = new Home();
-            home.setVisible(true);
-            
-        } 
+    private void botao_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cadastrarActionPerformed
+        {
+            // Verifica se o campo de login está vazio
+            if (campo_nome.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo de login está vazio
+                JOptionPane.showMessageDialog(null, "Campo nome vazio");
+                // Define o foco no campo de nome para o usuário preencher
+                campo_nome.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
+            if (campo_cpf.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo de login está vazio
+                JOptionPane.showMessageDialog(null, "Campo CPF vazio");
+                // Define o foco no campo de CPF para o usuário preencher
+                campo_cpf.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
 
-    }
-    }//GEN-LAST:event_jButton1ActionPerformed
+            if (campo_datanascimento.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo  está vazio
+                JOptionPane.showMessageDialog(null, "Campo data de Nascimento vazio");
+                // Define o foco no campo de dataNascimento para o usuário preencher
+                campo_datanascimento.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
+
+            if (campo_cartaosus.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo está vazio
+                JOptionPane.showMessageDialog(null, "Campo cartaoSus vazio");
+                // Define o foco no campo de cartaoSus para o usuário preencher
+                campo_cartaosus.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
+
+            if (campo_email.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo está vazio
+                JOptionPane.showMessageDialog(null, "Campo email vazio");
+                // Define o foco no campo de email para o usuário preencher
+                campo_email.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
+
+            if (campo_telefone.getText().isEmpty()) {
+                // Exibe uma mensagem de alerta informando que o campo está vazio
+                JOptionPane.showMessageDialog(null, "Campo telefone vazio");
+                // Define o foco no campo de telefone para o usuário preencher
+                campo_telefone.requestFocus();
+                return; // Sai do método, pois a validação falhou
+            }
+            //Mesma logica a cima, so que no campo senha.
+
+            // Chama o método de autenticação passando os valores dos campos de login e senha
+            if ((!campo_nome.getText().isEmpty()) && (!campo_cpf.getText().isEmpty()) && (!campo_datanascimento.getText().isEmpty()) && (!campo_cartaosus.getText().isEmpty()) && (!campo_email.getText().isEmpty()) && (!campo_telefone.getText().isEmpty())) {
+                // Se a autenticação for bem-sucedida, exibe uma mensagem informando que o usuário está logado
+                PacienteServico servico = new PacienteServico();
+
+                try {
+                    if (servico.cadastrar(campo_nome.getText(), campo_cpf.getText(), campo_datanascimento.getText(), campo_cartaosus.getText(), campo_email.getText(), campo_telefone.getText(), combo_situacao.getSelectedItem().toString())) {
+                        JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso");
+                        this.dispose();
+                        Home home = new Home();
+                        home.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Paciente com idade acima de 120 anos.");
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(CadastroPaciente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_botao_cadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,12 +367,15 @@ public class CadastroPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cartaoSus;
-    private javax.swing.JTextField cpf;
-    private javax.swing.JTextField dataNascimento;
-    private javax.swing.JTextField email;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botao_cadastrar;
+    private javax.swing.JButton botao_cancelar;
+    private javax.swing.JTextField campo_cartaosus;
+    private javax.swing.JTextField campo_cpf;
+    private javax.swing.JTextField campo_datanascimento;
+    private javax.swing.JTextField campo_email;
+    private javax.swing.JTextField campo_nome;
+    private javax.swing.JTextField campo_telefone;
+    private javax.swing.JComboBox<String> combo_situacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -370,8 +385,5 @@ public class CadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField nome;
-    private javax.swing.JComboBox<String> status;
-    private javax.swing.JTextField telefone;
     // End of variables declaration//GEN-END:variables
 }
