@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -16,14 +17,14 @@ public abstract class Pessoa {
    private String nome;
    private String cpf;
    private Date data_de_nascimento;
-   private String idade;
+   private int idade;
    
-   public Pessoa(int id, String nome, String cpf, Date data_de_nascimento, String idade){
+   public Pessoa(int id, String nome, String cpf, Date data_de_nascimento){
        this.id = id;
        this.nome = nome;
        this.cpf = cpf;
        this.data_de_nascimento = data_de_nascimento;
-       this.idade = idade;
+       this.idade = this.ObterIdadePorDataNascimento(data_de_nascimento);
    }
    
    public int getId(){
@@ -58,12 +59,23 @@ public abstract class Pessoa {
        this.data_de_nascimento = data_de_nascimento;
    }
    
-   public String getIdade() {
+   public int getIdade() {
         return this.idade;
     }
 
-    public void setIdade(String idade) {
+    public void setIdade(int idade) {
         this.idade = idade;
+    }
+    
+    public int ObterIdadePorDataNascimento(Date data_de_nascimento){
+        Calendar calendario = Calendar.getInstance();
+        int anoAtual = calendario.get(Calendar.YEAR);
+        
+        calendario.setTime(data_de_nascimento);
+        
+        int anoNascimento = calendario.get(Calendar.YEAR);
+        
+        return anoAtual - anoNascimento;
     }
    
 }

@@ -16,9 +16,14 @@ public class Paciente extends Pessoa {
     private String numeroSUS;
     private String email;
     private String telefone;
+    private String status;
     
-    public Paciente(int id, String nome, String cpf, Date data_de_nascimento, String idade) {
-        super(id, nome, cpf, data_de_nascimento, idade);
+    public Paciente(int id, String nome, String cpf, Date data_de_nascimento, String numeroSus, String email, String telefone, String status) {
+        super(id, nome, cpf, data_de_nascimento);
+        this.numeroSUS = numeroSus;
+        this.email = email;
+        this.telefone = telefone;
+        this.status = status;
     }
 
     public int getId() {
@@ -51,6 +56,14 @@ public class Paciente extends Pessoa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }
