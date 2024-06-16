@@ -4,6 +4,16 @@
  */
 package view.telas;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Agendamento;
+import services.AgendamentoServico;
+
 /**
  *
  * @author zanna
@@ -15,6 +25,36 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        AgendamentoServico servico = new AgendamentoServico();
+        ArrayList<Agendamento> agenda = servico.filtrarPorData(new Date(calendar.getTimeInMillis()));
+        System.out.println(agenda.isEmpty());
+        carregarAgendamentos(agenda);
+    }
+
+    private void carregarAgendamentos(ArrayList<Agendamento> agenda) {
+        DefaultTableModel model = (DefaultTableModel) tabelaAgenda.getModel();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        for (Agendamento agendamento : agenda) {
+            String horario = sdf.format(agendamento.getDataHora().getTime());
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if (model.getValueAt(i, 0).equals(horario)) {
+                    model.setValueAt(agendamento.getPaciente(), i, 1);
+                    model.setValueAt(agendamento.getMedico(), i, 2);
+                    model.setValueAt(agendamento.getMedico().getEspecialidades(), i, 3);
+                    model.setValueAt(agendamento.getId(), i, 4);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -37,13 +77,14 @@ public class Home extends javax.swing.JFrame {
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        TextPesquisar = new javax.swing.JTextField();
-        lupa = new javax.swing.JButton();
+        campo_pesquisar = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAgenda = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnApagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +109,7 @@ public class Home extends javax.swing.JFrame {
         btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
         btnPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnPaciente.setForeground(new java.awt.Color(51, 51, 51));
-        btnPaciente.setText(" Cadastrar Paciente");
+        btnPaciente.setText("Paciente");
         btnPaciente.setBorder(null);
         btnPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +122,11 @@ public class Home extends javax.swing.JFrame {
         btnMedico.setForeground(new java.awt.Color(51, 51, 51));
         btnMedico.setText(" Médico");
         btnMedico.setBorder(null);
+        btnMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMedicoActionPerformed(evt);
+            }
+        });
 
         btnConsulta.setBackground(new java.awt.Color(255, 255, 255));
         btnConsulta.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -140,25 +186,30 @@ public class Home extends javax.swing.JFrame {
         btnEditar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Pesquisar:");
 
-        TextPesquisar.setBackground(new java.awt.Color(255, 255, 255));
-        TextPesquisar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        TextPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        campo_pesquisar.setBackground(new java.awt.Color(255, 255, 255));
+        campo_pesquisar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        campo_pesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextPesquisarActionPerformed(evt);
+                campo_pesquisarActionPerformed(evt);
             }
         });
 
-        lupa.setBackground(new java.awt.Color(51, 0, 255));
-        lupa.setText("jButton3");
-        lupa.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisar.setBackground(new java.awt.Color(51, 0, 255));
+        btnPesquisar.setText("jButton3");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lupaActionPerformed(evt);
+                btnPesquisarActionPerformed(evt);
             }
         });
 
@@ -173,9 +224,9 @@ public class Home extends javax.swing.JFrame {
         tabelaAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"08:00", null, null, null, null},
-                {"08:30", " Angelica p.", null, null, null},
+                {"08:30", "", null, null, null},
                 {"09:00", null, null, null, null},
-                {"09:30", " Josefina duarte", null, null, null},
+                {"09:30", " ", null, null, null},
                 {"10:00", null, null, null, null},
                 {"10:30", null, null, null, null},
                 {"11:00", null, null, null, null},
@@ -193,11 +244,11 @@ public class Home extends javax.swing.JFrame {
                 {"17:00", null, null, null, null}
             },
             new String [] {
-                "Horário", "Paciente", "Paciente", "Paciente", "Paciente"
+                "Horário", "Paciente", "Medico", "Especialidade", "Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -208,22 +259,29 @@ public class Home extends javax.swing.JFrame {
         tabelaAgenda.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tabelaAgenda);
         if (tabelaAgenda.getColumnModel().getColumnCount() > 0) {
-            tabelaAgenda.getColumnModel().getColumn(0).setMinWidth(40);
+            tabelaAgenda.getColumnModel().getColumn(0).setMinWidth(20);
             tabelaAgenda.getColumnModel().getColumn(0).setMaxWidth(100);
             tabelaAgenda.getColumnModel().getColumn(3).setResizable(false);
-            tabelaAgenda.getColumnModel().getColumn(3).setHeaderValue("Paciente");
-            tabelaAgenda.getColumnModel().getColumn(4).setResizable(false);
-            tabelaAgenda.getColumnModel().getColumn(4).setHeaderValue("Paciente");
+            tabelaAgenda.getColumnModel().getColumn(4).setMinWidth(30);
+            tabelaAgenda.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("16/06/2024");
 
-        jButton1.setBackground(new java.awt.Color(51, 0, 255));
-        jButton1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("excluir");
+        btnExcluir.setBackground(new java.awt.Color(51, 0, 255));
+        btnExcluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setText("excluir");
+
+        btnApagar.setBackground(new java.awt.Color(51, 0, 255));
+        btnApagar.setText("jButton3");
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -242,13 +300,15 @@ public class Home extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(6, 6, 6)
-                        .addComponent(TextPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campo_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -266,11 +326,12 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
                     .addComponent(jLabel2)
-                    .addComponent(TextPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lupa)
+                    .addComponent(campo_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnApagar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
@@ -290,35 +351,55 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextPesquisarActionPerformed
+    private void campo_pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_pesquisarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextPesquisarActionPerformed
+    }//GEN-LAST:event_campo_pesquisarActionPerformed
 
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgendaActionPerformed
 
-    private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lupaActionPerformed
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-         this.dispose();
-                // Instancia e exibe a tela principal
-            DadosPaciente cadastroPaciente = new DadosPaciente(null);
-            cadastroPaciente.setVisible(true);
+        // Instancia e exibe a tela principal
+        ListaPaciente view = new ListaPaciente();
+        view.setVisible(true);
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-                    this.dispose();
-                // Instancia e exibe a tela principal
-            Agendamento agendamento = new Agendamento();
-            agendamento.setVisible(true);
+        // Instancia e exibe a tela principal
+        DadosAgendamento agendamento = new DadosAgendamento(null);
+        agendamento.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnApagarActionPerformed
+
+    private void btnMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicoActionPerformed
+        ListaMedico view = new ListaMedico();
+        view.setVisible(true);
+    }//GEN-LAST:event_btnMedicoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tabelaAgenda.getSelectedRow() != -1) {
+            int id = (int) tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4);
+            AgendamentoServico servico = new AgendamentoServico();
+            Agendamento agendamento = servico.obterPorId(id);
+            this.dispose();
+            DadosAgendamento view = new DadosAgendamento(agendamento);
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,14 +437,16 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TextPesquisar;
     private javax.swing.JButton btnAgenda;
+    private javax.swing.JButton btnApagar;
     private javax.swing.JToggleButton btnConsulta;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JToggleButton btnMedico;
     private javax.swing.JButton btnNovo;
     private javax.swing.JToggleButton btnPaciente;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JTextField campo_pesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -372,7 +455,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton lupa;
     private javax.swing.JTable tabelaAgenda;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,19 +4,90 @@
  */
 package view.telas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import model.Agendamento;
+import model.Medico;
+import model.Paciente;
+import services.AgendamentoServico;
+import services.MedicoServico;
+import services.PacienteServico;
 
 /**
  *
  * @author zanna
  */
-public class Agendamento extends javax.swing.JFrame {
+public class DadosAgendamento extends javax.swing.JFrame {
+
+    private Paciente paciente;
+    private Medico medico;
+    private Agendamento agendamento;
 
     /**
      * Creates new form Agendamento
+     *
+     * @param agendamento
      */
-    public Agendamento() {
+    public DadosAgendamento(Agendamento agendamento) {
         initComponents();
+        carregarComboMedicos();
+
+        this.agendamento = agendamento;
+
+        if (agendamento != null) {
+            carregarDadoNaTela();
+        }
+    }
+
+    public void carregarDadoNaTela() {
+        botao_agendar.setText("Reagendar");
+        /*
+        campo_nome.setText(this.medico.getNome());
+        campo_cpf.setText(this.medico.getCpf());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        campo_datanascimento.setText(dateFormat.format(this.medico.getData_de_nascimento()));
+
+        campo_crm.setText(this.medico.getCRM());
+
+        combo_especialidade.setSelectedItem(this.medico.getEspecialidades());
+        combo_situacao.setSelectedItem(this.medico.getStatus());
+         */
+    }
+
+    public void carregarComboMedicos() {
+        MedicoServico servico = new MedicoServico();
+        ArrayList<Medico> lista_medicos = servico.consultarTodos();
+
+        if (lista_medicos != null) {
+            for (Medico medico : lista_medicos) {
+                combo_medico.addItem(medico);
+            }
+
+            if (combo_medico.getSelectedItem() != null) {
+                Medico medicoSelecionado = (Medico) combo_medico.getSelectedItem();
+                medico = medicoSelecionado;
+                campo_med_especialidade.setText(medico.getEspecialidades());
+            }
+
+            combo_medico.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    campo_med_especialidade.setText("");
+                    Medico medicoSelecionado = (Medico) combo_medico.getSelectedItem();
+                    if (medicoSelecionado != null) {
+                        medico = medicoSelecionado;
+                        campo_med_especialidade.setText(medico.getEspecialidades());
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -32,21 +103,21 @@ public class Agendamento extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cpfText = new javax.swing.JTextField();
-        btnConsultar = new javax.swing.JButton();
-        pacienteText = new javax.swing.JTextField();
+        campo_consulta_pac_cpf = new javax.swing.JTextField();
+        botao_consultarpaciente = new javax.swing.JButton();
+        campo_nome_paciente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        boxEspecialista = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        boxMedico = new javax.swing.JComboBox<>();
+        combo_medico = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        campo_med_especialidade = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        dataConsulta = new javax.swing.JTextField();
+        campo_data = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        horaConsulta = new javax.swing.JTextField();
-        btnAgendar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        campo_hora = new javax.swing.JTextField();
+        botao_agendar = new javax.swing.JButton();
+        botao_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,32 +136,23 @@ public class Agendamento extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Paciente");
 
-        cpfText.setBackground(new java.awt.Color(255, 255, 255));
-        cpfText.setForeground(new java.awt.Color(51, 51, 51));
-        cpfText.addActionListener(new java.awt.event.ActionListener() {
+        campo_consulta_pac_cpf.setBackground(new java.awt.Color(255, 255, 255));
+        campo_consulta_pac_cpf.setForeground(new java.awt.Color(51, 51, 51));
+
+        botao_consultarpaciente.setBackground(new java.awt.Color(51, 0, 255));
+        botao_consultarpaciente.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        botao_consultarpaciente.setForeground(new java.awt.Color(255, 255, 255));
+        botao_consultarpaciente.setText("Consultar");
+        botao_consultarpaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpfTextActionPerformed(evt);
+                botao_consultarpacienteActionPerformed(evt);
             }
         });
 
-        btnConsultar.setBackground(new java.awt.Color(51, 0, 255));
-        btnConsultar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
-        btnConsultar.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultar.setText("Consultar");
-        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarActionPerformed(evt);
-            }
-        });
-
-        pacienteText.setBackground(new java.awt.Color(255, 255, 255));
-        pacienteText.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        pacienteText.setForeground(new java.awt.Color(51, 51, 51));
-        pacienteText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pacienteTextActionPerformed(evt);
-            }
-        });
+        campo_nome_paciente.setBackground(new java.awt.Color(255, 255, 255));
+        campo_nome_paciente.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_nome_paciente.setForeground(new java.awt.Color(51, 51, 51));
+        campo_nome_paciente.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -100,11 +162,11 @@ public class Agendamento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cpfText, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campo_consulta_pac_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConsultar)
+                        .addComponent(botao_consultarpaciente)
                         .addGap(18, 18, 18)
-                        .addComponent(pacienteText)
+                        .addComponent(campo_nome_paciente)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,34 +183,34 @@ public class Agendamento extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cpfText)
-                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(pacienteText))
+                    .addComponent(campo_consulta_pac_cpf)
+                    .addComponent(botao_consultarpaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(campo_nome_paciente))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Especialista", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 12), new java.awt.Color(51, 51, 51))); // NOI18N
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Especialidade");
-
-        boxEspecialista.setBackground(new java.awt.Color(255, 255, 255));
-        boxEspecialista.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        boxEspecialista.setForeground(new java.awt.Color(51, 51, 51));
-        boxEspecialista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Clínico Geral", "Ginecologista", "Obstetra", "Dermatologista" }));
-
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Médico");
 
-        boxMedico.setBackground(new java.awt.Color(255, 255, 255));
-        boxMedico.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        boxMedico.setForeground(new java.awt.Color(51, 51, 51));
-        boxMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dr. José Fonseca", "Dra. Cláudia Maria", "Dr. Pedro Jorge", "Dra. Mirian Barbosa" }));
+        combo_medico.setBackground(new java.awt.Color(255, 255, 255));
+        combo_medico.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        combo_medico.setForeground(new java.awt.Color(51, 51, 51));
+        combo_medico.setSelectedItem(this);
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("Especialidade");
+
+        campo_med_especialidade.setBackground(new java.awt.Color(255, 255, 255));
+        campo_med_especialidade.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        campo_med_especialidade.setForeground(new java.awt.Color(51, 51, 51));
+        campo_med_especialidade.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,27 +219,28 @@ public class Agendamento extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(boxEspecialista, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(combo_medico, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campo_med_especialidade)
+                        .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 264, Short.MAX_VALUE))
-                    .addComponent(boxMedico, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(135, 135, 135))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boxEspecialista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boxMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combo_medico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campo_med_especialidade))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -189,14 +252,14 @@ public class Agendamento extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Data:");
 
-        dataConsulta.setBackground(new java.awt.Color(255, 255, 255));
+        campo_data.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setText("Horário:");
 
-        horaConsulta.setBackground(new java.awt.Color(255, 255, 255));
+        campo_hora.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -206,18 +269,18 @@ public class Agendamento extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dataConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campo_data, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(horaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campo_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(horaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campo_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGap(17, 17, 17)
@@ -225,28 +288,28 @@ public class Agendamento extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(dataConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campo_data, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        btnAgendar.setBackground(new java.awt.Color(51, 0, 255));
-        btnAgendar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        btnAgendar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgendar.setText("Agendar");
-        btnAgendar.addActionListener(new java.awt.event.ActionListener() {
+        botao_agendar.setBackground(new java.awt.Color(51, 0, 255));
+        botao_agendar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        botao_agendar.setForeground(new java.awt.Color(255, 255, 255));
+        botao_agendar.setText("Agendar");
+        botao_agendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgendarActionPerformed(evt);
+                botao_agendarActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(51, 0, 204));
-        jButton2.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botao_cancelar.setBackground(new java.awt.Color(51, 0, 204));
+        botao_cancelar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        botao_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        botao_cancelar.setText("Cancelar");
+        botao_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botao_cancelarActionPerformed(evt);
             }
         });
 
@@ -262,9 +325,9 @@ public class Agendamento extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botao_agendar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botao_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -278,9 +341,9 @@ public class Agendamento extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(botao_agendar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botao_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel3.getAccessibleContext().setAccessibleDescription("");
@@ -299,67 +362,106 @@ public class Agendamento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-       
-         if(cpfText.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo cpf vazio");  
-         // Define o foco no campo de cpfText para o usuário preencher
-         cpfText.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-         if(pacienteText.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo paciente vazio");  
-         // Define o foco no campo de pacienteText para o usuário preencher
-         pacienteText.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }         
-          if(dataConsulta.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo data Consulta vazio");  
-         // Define o foco no campo de dataConsulta para o usuário preencher
-         dataConsulta.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-         if(horaConsulta.getText().isEmpty()){
-            // Exibe uma mensagem de alerta informando que o campo está vazio
-         JOptionPane.showMessageDialog(null, "Campo hora Consulta vazio");  
-         // Define o foco no campo de horaConsulta para o usuário preencher
-         horaConsulta.requestFocus();
-         return; // Sai do método, pois a validação falhou
-       }
-       
-       
-        // Chama o método de autenticação passando os valores dos campos de login e senha
-        if ((!cpfText.getText().isEmpty()) && (!pacienteText.getText().isEmpty()) && (!dataConsulta.getText().isEmpty()) && (!horaConsulta.getText().isEmpty()) ) {
-            // Se a autenticação for bem-sucedida, exibe uma mensagem informando que o usuário está logado
-            JOptionPane.showMessageDialog(null, "Agendamento Realzado");
-            this.dispose();
-            Home home = new Home();
-            home.setVisible(true);
-            
-        } else{JOptionPane.showMessageDialog(null, "Agendamento Falhou");}
-    }//GEN-LAST:event_btnAgendarActionPerformed
+    private void botao_agendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_agendarActionPerformed
 
-    private void cpfTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpfTextActionPerformed
+        if (this.paciente == null) {
+            // Exibe uma mensagem de alerta informando que o campo está vazio
+            JOptionPane.showMessageDialog(null, "Pesquise primeiro um paciente");
+            // Define o foco no campo de cpfText para o usuário preencher
+            campo_consulta_pac_cpf.requestFocus();
+            return; // Sai do método, pois a validação falhou
+        }
 
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultarActionPerformed
+        if (this.medico == null) {
+            JOptionPane.showMessageDialog(null, "Selecionei primeiro um medico");
+        }
 
-    private void pacienteTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pacienteTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pacienteTextActionPerformed
+        if (campo_data.getText().isEmpty()) {
+            // Exibe uma mensagem de alerta informando que o campo está vazio
+            JOptionPane.showMessageDialog(null, "Campo data Consulta vazio");
+            // Define o foco no campo de dataConsulta para o usuário preencher
+            campo_data.requestFocus();
+            return; // Sai do método, pois a validação falhou
+        }
+        if (campo_hora.getText().isEmpty()) {
+            // Exibe uma mensagem de alerta informando que o campo está vazio
+            JOptionPane.showMessageDialog(null, "Campo hora Consulta vazio");
+            // Define o foco no campo de horaConsulta para o usuário preencher
+            campo_hora.requestFocus();
+            return; // Sai do método, pois a validação falhou
+        }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        try {
+            Date date = dateFormat.parse(campo_data.getText());
+            Date time = timeFormat.parse(campo_hora.getText());
+
+            // Combinar data e hora
+            Calendar dateTime = Calendar.getInstance();
+            Calendar currentDate = Calendar.getInstance();
+
+            dateTime.setTime(date);
+            dateTime.set(Calendar.HOUR_OF_DAY, time.getHours());
+            dateTime.set(Calendar.MINUTE, time.getMinutes());
+            dateTime.set(Calendar.SECOND, time.getSeconds());
+
+            // Garantir que não agende em datas anteriores a data atual
+            if (!dateTime.before(currentDate)) {
+                JOptionPane.showMessageDialog(this, "Nâo é possivel agendar nesta Data e Hora.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                AgendamentoServico servico = new AgendamentoServico();
+                boolean salvou = false;
+                
+                if(this.agendamento == null){
+                    salvou = servico.agendar(medico, paciente, dateTime);
+                }else{
+                    salvou = servico.reagendar(agendamento, medico, paciente, dateTime);
+                }
+                
+                if(salvou){
+                    JOptionPane.showMessageDialog(null, "Agendamento realizado com sucesso.");
+                    this.dispose();
+                    Home view = new Home();
+                    view.setVisible(true);
+                }
+            }
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de data ou hora inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_botao_agendarActionPerformed
+
+    private void botao_consultarpacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_consultarpacienteActionPerformed
+        if (campo_consulta_pac_cpf.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo de CPF do paciente vazio.");
+            // Define o foco no campo de nome para o usuário preencher
+            campo_consulta_pac_cpf.requestFocus();
+            return;
+        }
+
+        PacienteServico servico = new PacienteServico();
+        Paciente paciente = servico.consultarPorCPF(campo_consulta_pac_cpf.getText());
+
+        if (paciente == null) {
+            campo_nome_paciente.setText("");
+            this.paciente = null;
+            JOptionPane.showMessageDialog(null, "Paciente não encontrado.");
+        } else {
+            campo_nome_paciente.setText(paciente.getNome());
+            this.paciente = paciente;
+        }
+    }//GEN-LAST:event_botao_consultarpacienteActionPerformed
+
+    private void botao_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cancelarActionPerformed
         this.dispose();
         // Instancia e exibe a tela principal
         Home home = new Home();
         home.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botao_cancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,43 +480,44 @@ public class Agendamento extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DadosAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DadosAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DadosAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DadosAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Agendamento().setVisible(true);
+                new DadosAgendamento(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boxEspecialista;
-    private javax.swing.JComboBox<String> boxMedico;
-    private javax.swing.JButton btnAgendar;
-    private javax.swing.JButton btnConsultar;
-    private javax.swing.JTextField cpfText;
-    private javax.swing.JTextField dataConsulta;
-    private javax.swing.JTextField horaConsulta;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botao_agendar;
+    private javax.swing.JButton botao_cancelar;
+    private javax.swing.JButton botao_consultarpaciente;
+    private javax.swing.JTextField campo_consulta_pac_cpf;
+    private javax.swing.JTextField campo_data;
+    private javax.swing.JTextField campo_hora;
+    private javax.swing.JTextField campo_med_especialidade;
+    private javax.swing.JTextField campo_nome_paciente;
+    private javax.swing.JComboBox<Medico> combo_medico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField pacienteText;
     // End of variables declaration//GEN-END:variables
 }

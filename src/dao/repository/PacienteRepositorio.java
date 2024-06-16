@@ -54,6 +54,39 @@ public class PacienteRepositorio implements IRepositorio<Paciente> {
 
         return paciente; // Retorna um paciente
     }
+    
+    public Paciente obterPorCPF(String documento) {
+        Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        Paciente paciente = null; // Inicializa o paciente nulo
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM paciente WHERE cpf = ?");// Prepara a consulta SQL
+            stmt.setString(1, documento);
+            rs = stmt.executeQuery(); // Executa a consulta
+
+            if (rs.next()) { // Pega a primeira linha
+                int pac_id = rs.getInt("id_paciente");
+                String pac_nome = rs.getString("nome");
+                String pac_cpf = rs.getString("cpf");
+                Date pac_data_nasc = rs.getDate("data_nascimento");
+                String pac_c_sus = rs.getString("cartaoSus");
+                String pac_tel = rs.getString("telefone");
+                String pac_email = rs.getString("email");
+                String pac_status = rs.getString("status");
+                paciente = new Paciente(pac_id, pac_nome, pac_cpf, pac_data_nasc, pac_c_sus, pac_email, pac_tel, pac_status); // Inicializa o paciente
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs); // Fecha a conexão, o PreparedStatement e o ResultSet
+        }
+
+        return paciente; // Retorna um paciente
+    }
 
     @Override
     public ArrayList<Paciente> obterTodos() {

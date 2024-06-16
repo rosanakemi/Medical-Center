@@ -56,4 +56,8 @@ public class Paciente extends Pessoa {
         this.status = status;
     }
     
+    @Override
+    public String toString(){
+        return this.getNome();
+    }
 }

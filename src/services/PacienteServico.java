@@ -27,6 +27,11 @@ public class PacienteServico {
         return repositorio.obterPorId(id);
     }
     
+    public Paciente consultarPorCPF(String cpf){
+        PacienteRepositorio repositorio = new PacienteRepositorio();
+        return repositorio.obterPorCPF(cpf);
+    }
+    
     public ArrayList<Paciente> filtrar(String nome){
         PacienteRepositorio repositorio = new PacienteRepositorio();
         return repositorio.obterPorNome(nome);
