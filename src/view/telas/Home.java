@@ -4,6 +4,7 @@
  */
 package view.telas;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,7 @@ import services.AgendamentoServico;
  */
 public class Home extends javax.swing.JFrame {
 
+    private Date dataAtual;
     /**
      * Creates new form Home
      */
@@ -31,11 +33,26 @@ public class Home extends javax.swing.JFrame {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        this.dataAtual = new Date(calendar.getTimeInMillis());
+        
+        String dateString = campo_pesquisa_data.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        campo_pesquisa_data.setText(dateFormat.format(dataAtual));
 
         AgendamentoServico servico = new AgendamentoServico();
-        ArrayList<Agendamento> agenda = servico.filtrarPorData(new Date(calendar.getTimeInMillis()));
+        ArrayList<Agendamento> agenda = servico.filtrarPorData(dataAtual);
         System.out.println(agenda.isEmpty());
         carregarAgendamentos(agenda);
+    }
+
+    private void limparTabela() {
+        DefaultTableModel model = (DefaultTableModel) tabelaAgenda.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            model.setValueAt(null, i, 1);
+            model.setValueAt(null, i, 2);
+            model.setValueAt(null, i, 3);
+            model.setValueAt(null, i, 4);
+        }
     }
 
     private void carregarAgendamentos(ArrayList<Agendamento> agenda) {
@@ -77,14 +94,11 @@ public class Home extends javax.swing.JFrame {
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        campo_pesquisar = new javax.swing.JTextField();
-        btnPesquisar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        campo_pesquisa_data = new javax.swing.JTextField();
+        botao_ag_pesquisa_data = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAgenda = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
-        btnApagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -195,28 +209,23 @@ public class Home extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Pesquisar:");
+        jLabel2.setText("Data:");
 
-        campo_pesquisar.setBackground(new java.awt.Color(255, 255, 255));
-        campo_pesquisar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        campo_pesquisar.addActionListener(new java.awt.event.ActionListener() {
+        campo_pesquisa_data.setBackground(new java.awt.Color(255, 255, 255));
+        campo_pesquisa_data.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        campo_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_pesquisarActionPerformed(evt);
+                campo_pesquisa_dataActionPerformed(evt);
             }
         });
 
-        btnPesquisar.setBackground(new java.awt.Color(51, 0, 255));
-        btnPesquisar.setText("jButton3");
-        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        botao_ag_pesquisa_data.setBackground(new java.awt.Color(51, 0, 255));
+        botao_ag_pesquisa_data.setText("jButton3");
+        botao_ag_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarActionPerformed(evt);
+                botao_ag_pesquisa_dataActionPerformed(evt);
             }
         });
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Data:");
 
         tabelaAgenda.setBackground(new java.awt.Color(255, 255, 255));
         tabelaAgenda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -266,20 +275,13 @@ public class Home extends javax.swing.JFrame {
             tabelaAgenda.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
-        jLabel5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel5.setText("16/06/2024");
-
         btnExcluir.setBackground(new java.awt.Color(51, 0, 255));
         btnExcluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
         btnExcluir.setText("excluir");
-
-        btnApagar.setBackground(new java.awt.Color(51, 0, 255));
-        btnApagar.setText("jButton3");
-        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnApagarActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
 
@@ -291,10 +293,13 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNovo)
                         .addGap(4, 4, 4)
@@ -303,17 +308,11 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(6, 6, 6)
-                        .addComponent(campo_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campo_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
-                .addGap(12, 12, 12))
+                        .addComponent(botao_ag_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,12 +325,9 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
                     .addComponent(jLabel2)
-                    .addComponent(campo_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnApagar))
+                    .addComponent(campo_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botao_ag_pesquisa_data)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(102, Short.MAX_VALUE))
@@ -351,17 +347,37 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campo_pesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_pesquisarActionPerformed
+    private void campo_pesquisa_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_pesquisa_dataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campo_pesquisarActionPerformed
+    }//GEN-LAST:event_campo_pesquisa_dataActionPerformed
 
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgendaActionPerformed
 
-    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPesquisarActionPerformed
+    private void botao_ag_pesquisa_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_ag_pesquisa_dataActionPerformed
+        if(campo_pesquisa_data.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Inclua uma data para consultar os agendamentos.");
+            // Define o foco no campo para preencher
+            campo_pesquisa_data.requestFocus();
+            return;
+        }
+        
+        String dateString = campo_pesquisa_data.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = dateFormat.parse(dateString);
+            AgendamentoServico servico = new AgendamentoServico();
+            
+            ArrayList<Agendamento> agendamentosFiltro = servico.filtrarPorData(date);
+            limparTabela();
+            carregarAgendamentos(agendamentosFiltro);
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de data inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_botao_ag_pesquisa_dataActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
@@ -379,10 +395,6 @@ public class Home extends javax.swing.JFrame {
         agendamento.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnApagarActionPerformed
-
     private void btnMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicoActionPerformed
         ListaMedico view = new ListaMedico();
         view.setVisible(true);
@@ -390,6 +402,12 @@ public class Home extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tabelaAgenda.getSelectedRow() != -1) {
+
+            if (tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4) == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um registro valido para editar.");
+                return;
+            }
+
             int id = (int) tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4);
             AgendamentoServico servico = new AgendamentoServico();
             Agendamento agendamento = servico.obterPorId(id);
@@ -400,6 +418,30 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (tabelaAgenda.getSelectedRow() != -1) {
+
+            if (tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4) == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um registro valido para editar.");
+                return;
+            }
+
+            int id = (int) tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4);
+
+            int result = JOptionPane.showConfirmDialog(null, "Você confirma o cancelamento do Agendamento?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (result == JOptionPane.YES_OPTION) {
+                AgendamentoServico servico = new AgendamentoServico();
+                if (servico.cancelar(id)) {
+                    JOptionPane.showMessageDialog(null, "Agendamento cancelado com sucesso.");
+                    limparTabela();
+                    carregarAgendamentos(servico.filtrarPorData(this.dataAtual));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para cancelar.");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -437,21 +479,18 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botao_ag_pesquisa_data;
     private javax.swing.JButton btnAgenda;
-    private javax.swing.JButton btnApagar;
     private javax.swing.JToggleButton btnConsulta;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JToggleButton btnMedico;
     private javax.swing.JButton btnNovo;
     private javax.swing.JToggleButton btnPaciente;
-    private javax.swing.JButton btnPesquisar;
-    private javax.swing.JTextField campo_pesquisar;
+    private javax.swing.JTextField campo_pesquisa_data;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

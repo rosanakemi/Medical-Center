@@ -47,4 +47,10 @@ public class AgendamentoServico {
         repositorio.atualizar(agendamento);
         return true;
     }
+    
+    public boolean cancelar(int id){
+        AgendamentoRepositorio repositorio = new AgendamentoRepositorio();
+        repositorio.excluir(id);
+        return true;
+    }
 }

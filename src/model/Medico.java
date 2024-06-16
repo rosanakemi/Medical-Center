@@ -5,6 +5,7 @@
 package model;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -56,5 +57,18 @@ public class Medico extends Pessoa {
     @Override
     public String toString(){
         return this.getNome();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medico medico = (Medico) o;
+        return this.getId() == medico.getId() && this.getNome().equals(medico.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getNome(), this.getId());
     }
 }

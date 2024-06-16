@@ -38,13 +38,14 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
         // pecorre sobre os resultados da consulta
         try {
             stmt = con.prepareStatement("SELECT * FROM agendamento WHERE id_agendamento = ?");// Prepara a consulta SQL
+            stmt.setInt(1, id);
             rs = stmt.executeQuery(); // Executa a consulta
 
             if (rs.next()) {
-                int ag_id = rs.getInt("id");
+                int ag_id = rs.getInt("id_agendamento");
                 Paciente ag_paciente = pacienteRepo.obterPorId(rs.getInt("paciente"));
                 Medico ag_medico = medicoRepo.obterPorId(rs.getInt("medico"));
-                Date data = rs.getDate("data_hora");
+                Date data = rs.getTimestamp("data_hora");
                 Calendar datahora = Calendar.getInstance();
                 datahora.setTime(data);
                 agendamento = new Agendamento(ag_id, ag_paciente, ag_medico, datahora);
@@ -80,7 +81,7 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
             rs = stmt.executeQuery(); // Executa a consulta
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_agendamento");
                 Paciente paciente = pacienteRepo.obterPorId(rs.getInt("paciente"));
                 Medico medico = medicoRepo.obterPorId(rs.getInt("medico"));
                 Date data = rs.getDate("data_hora");
@@ -159,10 +160,10 @@ public class AgendamentoRepositorio implements IRepositorio<Agendamento> {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE agendamento SET paciente_id = ?, medico_id = ?, data_hora = ? WHERE id_agendamento = ?");// Prepara a consulta SQL
+            stmt = con.prepareStatement("UPDATE agendamento SET paciente = ?, medico = ?, data_hora = ? WHERE id_agendamento = ?");// Prepara a consulta SQL
             stmt.setInt(1, obj.getPaciente().getId());
             stmt.setInt(2, obj.getMedico().getId());
-            stmt.setDate(3, new java.sql.Date(obj.getDataHora().getTimeInMillis()));
+            stmt.setTimestamp(3, new java.sql.Timestamp(obj.getDataHora().getTimeInMillis()));
             stmt.setInt(4, obj.getId());
             stmt.execute();
         } catch (SQLException ex) {
