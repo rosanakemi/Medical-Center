@@ -32,7 +32,7 @@ public class MedicoRepositorio implements IRepositorio<Medico> {
 
         try {
             stmt = con.prepareStatement("SELECT * FROM medico WHERE id_medico = ?");// Prepara a consulta SQL
-            stmt.setInt(0, id);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery(); // Executa a consulta
 
             if (rs.next()) { // Pega a primeira linha
@@ -90,19 +90,54 @@ public class MedicoRepositorio implements IRepositorio<Medico> {
         return medicos; // Retorna a lista de medicos
     }
 
+    public ArrayList<Medico> obterPorNome(String nomeMedico) {
+        Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
+        PreparedStatement stmt = null; // Objeto para executar instruções SQL parametrizadas.
+        ResultSet rs = null; // Objeto para armazenar e processar resultados de consultas SQL.
+
+        ArrayList<Medico> medicos = new ArrayList<>(); // Lista para armazenar os Medicos.
+
+        // pecorre sobre os resultados da consulta
+        try {
+            stmt = con.prepareStatement("SELECT * FROM medico WHERE nome LIKE ?");// Prepara a consulta SQL
+            stmt.setString(1, "%"+nomeMedico+"%");
+            rs = stmt.executeQuery(); // Executa a consulta
+
+            // while - fique repetido.. repetição
+            while (rs.next()) {
+                int id = rs.getInt("id_medico");
+                String CRM = rs.getString("crm");
+                String especialidades = rs.getString("especialidade");
+                String nome = rs.getString("nome");
+                String cpf = rs.getString("cpf");
+                Date data_de_nascimento = rs.getDate("data_nascimento");
+                String status = rs.getString("status");
+                Medico medico = new Medico(id, nome, cpf, data_de_nascimento, CRM, especialidades,status); // Cria um objeto Medico
+                medicos.add(medico); // Adiciona o medico à lista
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs); // Fecha a conexão, o PreparedStatement e o ResultSet
+        }
+
+        return medicos; // Retorna a lista de medicos
+    }
+    
     @Override
     public void salvar(Medico obj) {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO `medico`(nome, cpf, data_nascimento, crm, especialidade, status) VALUES (?,?,?,?,?,?)");// Prepara a consulta SQL
-            stmt.setString(0, obj.getNome());
-            stmt.setString(1, obj.getCpf());
-            stmt.setDate(2, (java.sql.Date) obj.getData_de_nascimento());
-            stmt.setString(3, obj.getCRM());
-            stmt.setString(4, obj.getEspecialidades());
-            stmt.setString(5, obj.getStatus());
+            stmt = con.prepareStatement("INSERT INTO medico (nome, cpf, data_nascimento, crm, especialidade, status) VALUES (?,?,?,?,?,?)");// Prepara a consulta SQL
+            stmt.setString(1, obj.getNome());
+            stmt.setString(2, obj.getCpf());
+            stmt.setDate(3, new java.sql.Date(obj.getData_de_nascimento().getTime()));
+            stmt.setString(4, obj.getCRM());
+            stmt.setString(5, obj.getEspecialidades());
+            stmt.setString(6, obj.getStatus());
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
@@ -118,12 +153,13 @@ public class MedicoRepositorio implements IRepositorio<Medico> {
 
         try {
             stmt = con.prepareStatement("UPDATE medico SET nome= ? ,cpf= ? ,data_nascimento= ? ,crm= ? ,especialidade= ? ,status= ?  WHERE id_medico = ?");// Prepara a consulta SQL
-            stmt.setString(0, obj.getNome());
-            stmt.setString(1, obj.getCpf());
-            stmt.setDate(2, (java.sql.Date) obj.getData_de_nascimento());
-            stmt.setString(3, obj.getCRM());
-            stmt.setString(4, obj.getEspecialidades());
-            stmt.setString(5, obj.getStatus());
+            stmt.setString(1, obj.getNome());
+            stmt.setString(2, obj.getCpf());
+            stmt.setDate(3, new java.sql.Date(obj.getData_de_nascimento().getTime()));
+            stmt.setString(4, obj.getCRM());
+            stmt.setString(5, obj.getEspecialidades());
+            stmt.setString(6, obj.getStatus());
+            stmt.setInt(7, obj.getId());
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro
@@ -139,7 +175,7 @@ public class MedicoRepositorio implements IRepositorio<Medico> {
 
         try {
             stmt = con.prepareStatement("DELETE FROM medico WHERE id_medico = ?");// Prepara a consulta SQL
-            stmt.setInt(0, id);
+            stmt.setInt(1, id);
             stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioRepositorio.class.getName()).log(Level.SEVERE, null, ex);// Registra o erro

@@ -8,44 +8,43 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import model.Paciente;
-import services.PacienteServico;
+import model.Medico;
+import services.MedicoServico;
 
 /**
  *
  * @author zanna
  */
-public class ListaPaciente extends javax.swing.JFrame {
+public class ListaMedico extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListaPaciente
+     * Creates new form ListaMedico
      */
-    public ListaPaciente() {
+    public ListaMedico() {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) jTPaciente.getModel();
-        jTPaciente.setRowSorter(new TableRowSorter(modelo));
 
-        PacienteServico servico = new PacienteServico();
-        ArrayList<Paciente> pacientes = servico.consultarTodos();
-        carregarPacientesNaTabela(pacientes);
+        DefaultTableModel modelo = (DefaultTableModel) jTMedico.getModel();
+        jTMedico.setRowSorter(new TableRowSorter(modelo));
+
+        MedicoServico servico = new MedicoServico();
+        carregarMedicosNaTabela(servico.consultarTodos());
     }
 
-    private void carregarPacientesNaTabela(ArrayList<Paciente> list) {
+    private void carregarMedicosNaTabela(ArrayList<Medico> list) {
         // Limpar dados da Tabela
-        DefaultTableModel modelo = (DefaultTableModel) jTPaciente.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTMedico.getModel();
         modelo.setNumRows(0);
 
         if (list != null) {
-            for (Paciente p : list) {
+            for (Medico p : list) {
 
                 modelo.addRow(new Object[]{
                     p.getId(),
                     p.getNome(),
                     p.getCpf(),
                     p.getData_de_nascimento(),
-                    p.getNumeroSUS(),
-                    p.getTelefone(),
-                    p.getEmail(),
+                    p.getEspecialidades(),
+                    p.getCRM(),
                     p.getStatus()
                 });
             }
@@ -71,14 +70,14 @@ public class ListaPaciente extends javax.swing.JFrame {
         campo_pesquisa = new javax.swing.JTextField();
         btnConsulta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTPaciente = new javax.swing.JTable();
+        jTMedico = new javax.swing.JTable();
         btn_excluir = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(908, 501));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -102,7 +101,7 @@ public class ListaPaciente extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Lista de Pacientes");
+        jLabel1.setText("Lista de Medicos");
 
         btn_novo.setBackground(new java.awt.Color(51, 0, 255));
         btn_novo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -140,22 +139,22 @@ public class ListaPaciente extends javax.swing.JFrame {
             }
         });
 
-        jTPaciente.setBackground(new java.awt.Color(255, 255, 255));
-        jTPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTPaciente.setForeground(new java.awt.Color(51, 51, 51));
-        jTPaciente.setModel(new javax.swing.table.DefaultTableModel(
+        jTMedico.setBackground(new java.awt.Color(255, 255, 255));
+        jTMedico.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jTMedico.setForeground(new java.awt.Color(51, 51, 51));
+        jTMedico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "CPF", "Data de Nascimento", "Nº Cartão SUS", "Telefone", "E-mail", "Status"
+                "Id", "Nome", "CPF", "Data de Nascimento", "Especialidade", "CRM", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -166,11 +165,10 @@ public class ListaPaciente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTPaciente.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTPaciente.setShowGrid(true);
-        jTPaciente.setShowVerticalLines(false);
-        jScrollPane1.setViewportView(jTPaciente);
-        jTPaciente.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTMedico.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTMedico.setShowGrid(true);
+        jTMedico.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(jTMedico);
 
         btn_excluir.setBackground(new java.awt.Color(51, 0, 255));
         btn_excluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -202,14 +200,14 @@ public class ListaPaciente extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(0, 604, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_novo)
                                 .addGap(4, 4, 4)
                                 .addComponent(btn_editar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
                                 .addGap(6, 6, 6)
                                 .addComponent(campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,7 +246,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,9 +258,22 @@ public class ListaPaciente extends javax.swing.JFrame {
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
         this.dispose();
-        DadosPaciente cadastroView = new DadosPaciente(null);
-        cadastroView.setVisible(true);
+        DadosMedico view = new DadosMedico(null);
+        view.setVisible(true);
     }//GEN-LAST:event_btn_novoActionPerformed
+
+    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        if (jTMedico.getSelectedRow() != -1) {
+            int id = (int) jTMedico.getValueAt(jTMedico.getSelectedRow(), 0);
+            MedicoServico servico = new MedicoServico();
+            Medico medico = servico.consultarPorId(id);
+            this.dispose();
+            DadosMedico view = new DadosMedico(medico);
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
+        }
+    }//GEN-LAST:event_btn_editarActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         if (campo_pesquisa.getText().isEmpty()) {
@@ -272,46 +283,32 @@ public class ListaPaciente extends javax.swing.JFrame {
             return;
         }
 
-        PacienteServico servico = new PacienteServico();
-        ArrayList<Paciente> pacientes = servico.filtrar(campo_pesquisa.getText());
-        carregarPacientesNaTabela(pacientes);
+        MedicoServico servico = new MedicoServico();
+        ArrayList<Medico> pacientes = servico.filtrar(campo_pesquisa.getText());
+        carregarMedicosNaTabela(pacientes);
     }//GEN-LAST:event_btnConsultaActionPerformed
 
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        campo_pesquisa.setText("");
-        PacienteServico servico = new PacienteServico();
-        ArrayList<Paciente> pacientes = servico.consultarTodos();
-        carregarPacientesNaTabela(pacientes);
-    }//GEN-LAST:event_btnLimparActionPerformed
-
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-        if (jTPaciente.getSelectedRow() != -1) {
-            int id = (int) jTPaciente.getValueAt(jTPaciente.getSelectedRow(), 0);
+        if (jTMedico.getSelectedRow() != -1) {
+            int id = (int) jTMedico.getValueAt(jTMedico.getSelectedRow(), 0);
 
             int confirmacao = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja deletar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (confirmacao == JOptionPane.YES_OPTION) {
-                PacienteServico servico = new PacienteServico();
+                MedicoServico servico = new MedicoServico();
                 servico.deletar(id);
-                JOptionPane.showMessageDialog(null, "Paciente removido com sucesso.");
-                carregarPacientesNaTabela(servico.consultarTodos());
+                JOptionPane.showMessageDialog(null, "Medico removido com sucesso.");
+                carregarMedicosNaTabela(servico.consultarTodos());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para deletar.");
         }
     }//GEN-LAST:event_btn_excluirActionPerformed
 
-    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
-        if (jTPaciente.getSelectedRow() != -1) {
-            int id = (int) jTPaciente.getValueAt(jTPaciente.getSelectedRow(), 0);
-            PacienteServico servico = new PacienteServico();
-            Paciente paciente = servico.consultarPorId(id);
-            this.dispose();
-            DadosPaciente view = new DadosPaciente(paciente);
-            view.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
-        }
-    }//GEN-LAST:event_btn_editarActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        campo_pesquisa.setText("");
+        MedicoServico servico = new MedicoServico();
+        carregarMedicosNaTabela(servico.consultarTodos());
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,20 +327,20 @@ public class ListaPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaPaciente().setVisible(true);
+                new ListaMedico().setVisible(true);
             }
         });
     }
@@ -361,6 +358,6 @@ public class ListaPaciente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTPaciente;
+    private javax.swing.JTable jTMedico;
     // End of variables declaration//GEN-END:variables
 }
