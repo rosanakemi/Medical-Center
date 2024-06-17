@@ -109,8 +109,10 @@ public class Home extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/logoofc1.png"))); // NOI18N
         jLabel4.setText("jLabel4");
 
+        btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
         btnPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnPaciente.setForeground(new java.awt.Color(51, 51, 51));
+        btnPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/recepcao.png"))); // NOI18N
         btnPaciente.setText("Paciente");
         btnPaciente.setBorder(null);
         btnPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -119,8 +121,10 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        btnMedico.setBackground(new java.awt.Color(255, 255, 255));
         btnMedico.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnMedico.setForeground(new java.awt.Color(51, 51, 51));
+        btnMedico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/estetoscopio.png"))); // NOI18N
         btnMedico.setText(" Médico");
         btnMedico.setBorder(null);
         btnMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +133,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        btnConsulta.setBackground(new java.awt.Color(255, 255, 255));
         btnConsulta.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnConsulta.setForeground(new java.awt.Color(51, 51, 51));
         btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/homem-de-negocios.png"))); // NOI18N
@@ -144,32 +149,25 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+            .addComponent(btnMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(btnPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-            .addComponent(btnMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
                 .addComponent(btnPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(229, 229, 229)
-                    .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(229, Short.MAX_VALUE)))
         );
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -179,6 +177,7 @@ public class Home extends javax.swing.JFrame {
         btnNovo.setBackground(new java.awt.Color(51, 0, 255));
         btnNovo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnNovo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/novo-arquivo.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,6 +188,7 @@ public class Home extends javax.swing.JFrame {
         btnEditar.setBackground(new java.awt.Color(51, 0, 255));
         btnEditar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/editar.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,6 +201,7 @@ public class Home extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Data:");
 
+        campo_pesquisa_data.setBackground(new java.awt.Color(255, 255, 255));
         campo_pesquisa_data.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         campo_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,13 +210,14 @@ public class Home extends javax.swing.JFrame {
         });
 
         botao_ag_pesquisa_data.setBackground(new java.awt.Color(51, 0, 255));
-        botao_ag_pesquisa_data.setText("jButton3");
+        botao_ag_pesquisa_data.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/lupa.png"))); // NOI18N
         botao_ag_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botao_ag_pesquisa_dataActionPerformed(evt);
             }
         });
 
+        tabelaAgenda.setBackground(new java.awt.Color(255, 255, 255));
         tabelaAgenda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         tabelaAgenda.setForeground(new java.awt.Color(51, 51, 51));
         tabelaAgenda.setModel(new javax.swing.table.DefaultTableModel(
@@ -266,6 +268,7 @@ public class Home extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(51, 0, 255));
         btnExcluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/excluir.png"))); // NOI18N
         btnExcluir.setText("excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,7 +299,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,8 +333,8 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(botao_ag_pesquisa_data)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(botao_cancelar)
                 .addGap(16, 16, 16))
         );
@@ -348,6 +351,7 @@ public class Home extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void campo_pesquisa_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_pesquisa_dataActionPerformed

@@ -368,6 +368,7 @@ public class DadosAgendamento extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botao_pac_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_pac_consultarActionPerformed

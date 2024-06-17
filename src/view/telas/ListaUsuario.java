@@ -103,6 +103,7 @@ public class ListaUsuario extends javax.swing.JFrame {
         btn_novo.setBackground(new java.awt.Color(51, 0, 255));
         btn_novo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_novo.setForeground(new java.awt.Color(255, 255, 255));
+        btn_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/novo-arquivo.png"))); // NOI18N
         btn_novo.setText("Novo");
         btn_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +114,7 @@ public class ListaUsuario extends javax.swing.JFrame {
         btn_editar.setBackground(new java.awt.Color(51, 0, 255));
         btn_editar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_editar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/editar.png"))); // NOI18N
         btn_editar.setText("Editar");
         btn_editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,16 +127,18 @@ public class ListaUsuario extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Pesquisar:");
 
+        campo_pesquisa.setBackground(new java.awt.Color(255, 255, 255));
         campo_pesquisa.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         btnConsulta.setBackground(new java.awt.Color(51, 0, 255));
-        btnConsulta.setText("jButton3");
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/lupa.png"))); // NOI18N
         btnConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultaActionPerformed(evt);
             }
         });
 
+        jTUsuario.setBackground(new java.awt.Color(255, 255, 255));
         jTUsuario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jTUsuario.setForeground(new java.awt.Color(51, 51, 51));
         jTUsuario.setModel(new javax.swing.table.DefaultTableModel(
@@ -173,6 +177,7 @@ public class ListaUsuario extends javax.swing.JFrame {
         btn_excluir.setBackground(new java.awt.Color(51, 0, 255));
         btn_excluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_excluir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/excluir.png"))); // NOI18N
         btn_excluir.setText("excluir");
         btn_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +186,7 @@ public class ListaUsuario extends javax.swing.JFrame {
         });
 
         btnLimpar.setBackground(new java.awt.Color(51, 0, 255));
-        btnLimpar.setText("jButton3");
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/limpeza-de-dados.png"))); // NOI18N
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparActionPerformed(evt);
@@ -216,11 +221,11 @@ public class ListaUsuario extends javax.swing.JFrame {
                                 .addGap(4, 4, 4)
                                 .addComponent(btn_editar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                .addComponent(btn_excluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
-                                .addGap(6, 6, 6)
-                                .addComponent(campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(8, 8, 8)
@@ -255,14 +260,14 @@ public class ListaUsuario extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botao_cancelar)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 915, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,66 +275,68 @@ public class ListaUsuario extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
-        this.dispose();
-        DadosUsuario view = new DadosUsuario(null);
-        view.setVisible(true);
+        this.dispose();// Fecha a janela atual
+        DadosUsuario view = new DadosUsuario(null);// Abre a tela de cadastro de um novo usuário
+        view.setVisible(true);// Torna a nova tela visível
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        // Verifica se uma linha está selecionada
         if (jTUsuario.getSelectedRow() != -1) {
-            int id = (int) jTUsuario.getValueAt(jTUsuario.getSelectedRow(), 0);
+            int id = (int) jTUsuario.getValueAt(jTUsuario.getSelectedRow(), 0);// Obtém o ID do usuário selecionado
             UsuarioServico servico = new UsuarioServico();
-            Usuario usuario = servico.consultarPorId(id);
-            this.dispose();
-            DadosUsuario view = new DadosUsuario(usuario);
-            view.setVisible(true);
+            Usuario usuario = servico.consultarPorId(id);// Consulta o usuário pelo ID
+            this.dispose();// Fecha a janela atual
+            DadosUsuario view = new DadosUsuario(usuario);// Abre a tela de edição com os dados do usuário
+            view.setVisible(true);// Torna a nova tela visível
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
+            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");// Mostra mensagem de erro
         }
     }//GEN-LAST:event_btn_editarActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
-        if (campo_pesquisa.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Campo de pesquisa vazio");
+        if (campo_pesquisa.getText().isEmpty()) { // Verifica se o campo de pesquisa está vazio
+            JOptionPane.showMessageDialog(null, "Campo de pesquisa vazio");// Mostra mensagem de erro
             // Define o foco no campo de nome para o usuário preencher
             campo_pesquisa.requestFocus();
             return;
         }
 
         UsuarioServico servico = new UsuarioServico();
-        ArrayList<Usuario> pacientes = servico.filtrar(campo_pesquisa.getText());
-        carregarUsuariosNaTabela(pacientes);
+        ArrayList<Usuario> pacientes = servico.filtrar(campo_pesquisa.getText());// Filtra os usuários pelo texto de pesquisa
+        carregarUsuariosNaTabela(pacientes);// Carrega os usuários na tabela
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-        if (jTUsuario.getSelectedRow() != -1) {
-            int id = (int) jTUsuario.getValueAt(jTUsuario.getSelectedRow(), 0);
+        if (jTUsuario.getSelectedRow() != -1) { // Verifica se uma linha está selecionada
+            int id = (int) jTUsuario.getValueAt(jTUsuario.getSelectedRow(), 0);// Obtém o ID do usuário selecionado
 
             int confirmacao = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja deletar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (confirmacao == JOptionPane.YES_OPTION) {
+            if (confirmacao == JOptionPane.YES_OPTION) { // Verifica a confirmação do usuário
                 UsuarioServico servico = new UsuarioServico();
-                servico.deletar(id);
-                JOptionPane.showMessageDialog(null, "Usuario removido com sucesso.");
-                carregarUsuariosNaTabela(servico.consultarTodos());
+                servico.deletar(id);// Deleta o usuário
+                JOptionPane.showMessageDialog(null, "Usuario removido com sucesso."); // Mostra mensagem de sucesso
+                carregarUsuariosNaTabela(servico.consultarTodos());// Recarrega a tabela
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro para deletar.");
+            JOptionPane.showMessageDialog(null, "Selecione um registro para deletar."); // Mostra mensagem de erro
         }
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        campo_pesquisa.setText("");
+        campo_pesquisa.setText(""); // Limpa o campo de pesquisa
         UsuarioServico servico = new UsuarioServico();
-        carregarUsuariosNaTabela(servico.consultarTodos());
+        carregarUsuariosNaTabela(servico.consultarTodos());// Recarrega a tabela com todos os usuários
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void botao_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cancelarActionPerformed
-            this.dispose();
-            Home home = new Home();
-            home.setVisible(true);        // TODO add your handling code here:
+            this.dispose();// Fecha a janela atual
+            Home home = new Home();// Abre a tela principal
+            home.setVisible(true); // Torna a tela principal visível       
     }//GEN-LAST:event_botao_cancelarActionPerformed
 
     /**
