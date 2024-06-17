@@ -129,7 +129,7 @@ public class MedicoRepositorio implements IRepositorio<Medico> {
     public void salvar(Medico obj) {
         Connection con = ConnectionFactory.getConnection(); // Obtém a conexão com o banco de dados
         PreparedStatement stmt = null;
-
+        System.out.println(obj.getData_de_nascimento());
         try {
             stmt = con.prepareStatement("INSERT INTO medico (nome, cpf, data_nascimento, crm, especialidade, status) VALUES (?,?,?,?,?,?)");// Prepara a consulta SQL
             stmt.setString(1, obj.getNome());

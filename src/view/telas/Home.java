@@ -112,6 +112,7 @@ public class Home extends javax.swing.JFrame {
         btnAgenda.setBackground(new java.awt.Color(255, 255, 255));
         btnAgenda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnAgenda.setForeground(new java.awt.Color(51, 51, 51));
+        btnAgenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/cronograma.png"))); // NOI18N
         btnAgenda.setText(" Agenda");
         btnAgenda.setBorder(null);
         btnAgenda.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +124,7 @@ public class Home extends javax.swing.JFrame {
         btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
         btnPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnPaciente.setForeground(new java.awt.Color(51, 51, 51));
+        btnPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/recepcao.png"))); // NOI18N
         btnPaciente.setText("Paciente");
         btnPaciente.setBorder(null);
         btnPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +136,7 @@ public class Home extends javax.swing.JFrame {
         btnMedico.setBackground(new java.awt.Color(255, 255, 255));
         btnMedico.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnMedico.setForeground(new java.awt.Color(51, 51, 51));
+        btnMedico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/estetoscopio.png"))); // NOI18N
         btnMedico.setText(" Médico");
         btnMedico.setBorder(null);
         btnMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +192,7 @@ public class Home extends javax.swing.JFrame {
         btnNovo.setBackground(new java.awt.Color(51, 0, 255));
         btnNovo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnNovo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/novo-arquivo.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +203,7 @@ public class Home extends javax.swing.JFrame {
         btnEditar.setBackground(new java.awt.Color(51, 0, 255));
         btnEditar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/editar.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,7 +225,7 @@ public class Home extends javax.swing.JFrame {
         });
 
         botao_ag_pesquisa_data.setBackground(new java.awt.Color(51, 0, 255));
-        botao_ag_pesquisa_data.setText("jButton3");
+        botao_ag_pesquisa_data.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/lupa.png"))); // NOI18N
         botao_ag_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botao_ag_pesquisa_dataActionPerformed(evt);
@@ -278,6 +283,7 @@ public class Home extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(51, 0, 255));
         btnExcluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/excluir.png"))); // NOI18N
         btnExcluir.setText("excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,7 +311,7 @@ public class Home extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

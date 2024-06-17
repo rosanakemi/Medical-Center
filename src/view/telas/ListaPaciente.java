@@ -107,6 +107,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         btn_novo.setBackground(new java.awt.Color(51, 0, 255));
         btn_novo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_novo.setForeground(new java.awt.Color(255, 255, 255));
+        btn_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/novo-arquivo.png"))); // NOI18N
         btn_novo.setText("Novo");
         btn_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +118,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         btn_editar.setBackground(new java.awt.Color(51, 0, 255));
         btn_editar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_editar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/editar.png"))); // NOI18N
         btn_editar.setText("Editar");
         btn_editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,7 +135,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         campo_pesquisa.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         btnConsulta.setBackground(new java.awt.Color(51, 0, 255));
-        btnConsulta.setText("jButton3");
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/lupa.png"))); // NOI18N
         btnConsulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultaActionPerformed(evt);
@@ -175,6 +177,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         btn_excluir.setBackground(new java.awt.Color(51, 0, 255));
         btn_excluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btn_excluir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/excluir.png"))); // NOI18N
         btn_excluir.setText("excluir");
         btn_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,7 +186,7 @@ public class ListaPaciente extends javax.swing.JFrame {
         });
 
         btnLimpar.setBackground(new java.awt.Color(51, 0, 255));
-        btnLimpar.setText("jButton3");
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/limpeza-de-dados.png"))); // NOI18N
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparActionPerformed(evt);
@@ -208,11 +211,11 @@ public class ListaPaciente extends javax.swing.JFrame {
                                 .addGap(4, 4, 4)
                                 .addComponent(btn_editar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addComponent(btn_excluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
-                                .addGap(6, 6, 6)
-                                .addComponent(campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(campo_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(8, 8, 8)
