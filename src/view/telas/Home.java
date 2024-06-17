@@ -4,17 +4,74 @@
  */
 package view.telas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Agendamento;
+import services.AgendamentoServico;
+
 /**
  *
  * @author zanna
  */
 public class Home extends javax.swing.JFrame {
 
+    private Date dataAtual;
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        this.dataAtual = new Date(calendar.getTimeInMillis());
+        
+        String dateString = campo_pesquisa_data.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        campo_pesquisa_data.setText(dateFormat.format(dataAtual));
+
+        AgendamentoServico servico = new AgendamentoServico();
+        ArrayList<Agendamento> agenda = servico.filtrarPorData(dataAtual);
+        System.out.println(agenda.isEmpty());
+        carregarAgendamentos(agenda);
+    }
+
+    private void limparTabela() {
+        DefaultTableModel model = (DefaultTableModel) tabelaAgenda.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            model.setValueAt(null, i, 1);
+            model.setValueAt(null, i, 2);
+            model.setValueAt(null, i, 3);
+            model.setValueAt(null, i, 4);
+        }
+    }
+
+    private void carregarAgendamentos(ArrayList<Agendamento> agenda) {
+        DefaultTableModel model = (DefaultTableModel) tabelaAgenda.getModel();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        for (Agendamento agendamento : agenda) {
+            String horario = sdf.format(agendamento.getDataHora().getTime());
+            for (int i = 0; i < model.getRowCount(); i++) {
+                if (model.getValueAt(i, 0).equals(horario)) {
+                    model.setValueAt(agendamento.getPaciente(), i, 1);
+                    model.setValueAt(agendamento.getMedico(), i, 2);
+                    model.setValueAt(agendamento.getMedico().getEspecialidades(), i, 3);
+                    model.setValueAt(agendamento.getId(), i, 4);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -29,7 +86,6 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btnAgenda = new javax.swing.JButton();
         btnPaciente = new javax.swing.JToggleButton();
         btnMedico = new javax.swing.JToggleButton();
         btnConsulta = new javax.swing.JToggleButton();
@@ -37,13 +93,12 @@ public class Home extends javax.swing.JFrame {
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        TextPesquisar = new javax.swing.JTextField();
-        lupa = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        campo_pesquisa_data = new javax.swing.JTextField();
+        botao_ag_pesquisa_data = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaAgenda = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        botao_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,33 +109,26 @@ public class Home extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/logoofc1.png"))); // NOI18N
         jLabel4.setText("jLabel4");
 
-        btnAgenda.setBackground(new java.awt.Color(255, 255, 255));
-        btnAgenda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnAgenda.setForeground(new java.awt.Color(51, 51, 51));
-        btnAgenda.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\cronograma.png")); // NOI18N
-        btnAgenda.setText(" Agenda");
-        btnAgenda.setBorder(null);
-        btnAgenda.addActionListener(new java.awt.event.ActionListener() {
+        btnPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnPaciente.setForeground(new java.awt.Color(51, 51, 51));
+        btnPaciente.setText("Paciente");
+        btnPaciente.setBorder(null);
+        btnPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgendaActionPerformed(evt);
+                btnPacienteActionPerformed(evt);
             }
         });
 
-        btnPaciente.setBackground(new java.awt.Color(255, 255, 255));
-        btnPaciente.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btnPaciente.setForeground(new java.awt.Color(51, 51, 51));
-        btnPaciente.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\homem-de-negocios.png")); // NOI18N
-        btnPaciente.setText(" Paciente");
-        btnPaciente.setBorder(null);
-
-        btnMedico.setBackground(new java.awt.Color(255, 255, 255));
         btnMedico.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnMedico.setForeground(new java.awt.Color(51, 51, 51));
-        btnMedico.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\estetoscopio.png")); // NOI18N
         btnMedico.setText(" Médico");
         btnMedico.setBorder(null);
+        btnMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMedicoActionPerformed(evt);
+            }
+        });
 
-        btnConsulta.setBackground(new java.awt.Color(255, 255, 255));
         btnConsulta.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btnConsulta.setForeground(new java.awt.Color(51, 51, 51));
         btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/homem-de-negocios.png"))); // NOI18N
@@ -99,77 +147,83 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(btnAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
             .addComponent(btnMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(56, 56, 56)
                 .addComponent(btnPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(229, 229, 229)
+                    .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(229, Short.MAX_VALUE)))
         );
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\zanna\\Downloads\\icones\\pagina-inicial.png")); // NOI18N
         jLabel1.setText("Agenda");
 
         btnNovo.setBackground(new java.awt.Color(51, 0, 255));
         btnNovo.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnNovo.setForeground(new java.awt.Color(255, 255, 255));
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setBackground(new java.awt.Color(51, 0, 255));
         btnEditar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Pesquisar:");
+        jLabel2.setText("Data:");
 
-        TextPesquisar.setBackground(new java.awt.Color(255, 255, 255));
-        TextPesquisar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        TextPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        campo_pesquisa_data.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        campo_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextPesquisarActionPerformed(evt);
+                campo_pesquisa_dataActionPerformed(evt);
             }
         });
 
-        lupa.setBackground(new java.awt.Color(51, 0, 255));
-        lupa.setText("jButton3");
-        lupa.addActionListener(new java.awt.event.ActionListener() {
+        botao_ag_pesquisa_data.setBackground(new java.awt.Color(51, 0, 255));
+        botao_ag_pesquisa_data.setText("jButton3");
+        botao_ag_pesquisa_data.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lupaActionPerformed(evt);
+                botao_ag_pesquisa_dataActionPerformed(evt);
             }
         });
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Data:");
-
-        tabelaAgenda.setBackground(new java.awt.Color(255, 255, 255));
         tabelaAgenda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         tabelaAgenda.setForeground(new java.awt.Color(51, 51, 51));
         tabelaAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"08:00", null, null, null, null},
-                {"08:30", " Angelica p.", null, null, null},
+                {"08:30", "", null, null, null},
                 {"09:00", null, null, null, null},
-                {"09:30", " Josefina duarte", null, null, null},
+                {"09:30", " ", null, null, null},
                 {"10:00", null, null, null, null},
                 {"10:30", null, null, null, null},
                 {"11:00", null, null, null, null},
@@ -187,11 +241,11 @@ public class Home extends javax.swing.JFrame {
                 {"17:00", null, null, null, null}
             },
             new String [] {
-                "Horário", "Paciente", "Paciente", "Paciente", "Paciente"
+                "Horário", "Paciente", "Medico", "Especialidade", "Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -202,18 +256,32 @@ public class Home extends javax.swing.JFrame {
         tabelaAgenda.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tabelaAgenda);
         if (tabelaAgenda.getColumnModel().getColumnCount() > 0) {
-            tabelaAgenda.getColumnModel().getColumn(0).setMinWidth(40);
+            tabelaAgenda.getColumnModel().getColumn(0).setMinWidth(20);
             tabelaAgenda.getColumnModel().getColumn(0).setMaxWidth(100);
+            tabelaAgenda.getColumnModel().getColumn(3).setResizable(false);
+            tabelaAgenda.getColumnModel().getColumn(4).setMinWidth(30);
+            tabelaAgenda.getColumnModel().getColumn(4).setMaxWidth(50);
         }
 
-        jLabel5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel5.setText("16/06/2024");
+        btnExcluir.setBackground(new java.awt.Color(51, 0, 255));
+        btnExcluir.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
+        btnExcluir.setText("excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(51, 0, 255));
-        jButton1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("excluir");
+        botao_cancelar.setBackground(new java.awt.Color(51, 0, 204));
+        botao_cancelar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        botao_cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        botao_cancelar.setText("Sair");
+        botao_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,27 +291,29 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNovo)
                         .addGap(4, 4, 4)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(6, 6, 6)
-                        .addComponent(TextPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(lupa, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
-                .addGap(12, 12, 12))
+                        .addComponent(campo_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botao_ag_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(botao_cancelar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,14 +326,14 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(btnNovo)
                     .addComponent(btnEditar)
                     .addComponent(jLabel2)
-                    .addComponent(TextPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lupa)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campo_pesquisa_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botao_ag_pesquisa_data)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(botao_cancelar)
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,20 +350,107 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextPesquisarActionPerformed
+    private void campo_pesquisa_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_pesquisa_dataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextPesquisarActionPerformed
+    }//GEN-LAST:event_campo_pesquisa_dataActionPerformed
 
-    private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgendaActionPerformed
+    private void botao_ag_pesquisa_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_ag_pesquisa_dataActionPerformed
+        if(campo_pesquisa_data.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Inclua uma data para consultar os agendamentos.");
+            // Define o foco no campo para preencher
+            campo_pesquisa_data.requestFocus();
+            return;
+        }
+        
+        String dateString = campo_pesquisa_data.getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = dateFormat.parse(dateString);
+            AgendamentoServico servico = new AgendamentoServico();
+            
+            ArrayList<Agendamento> agendamentosFiltro = servico.filtrarPorData(date);
+            limparTabela();
+            carregarAgendamentos(agendamentosFiltro);
 
-    private void lupaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lupaActionPerformed
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de data inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_botao_ag_pesquisa_dataActionPerformed
+
+    private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
+        // Instancia e exibe a tela principal
+        this.dispose();
+        ListaPaciente view = new ListaPaciente();
+        view.setVisible(true);
+    }//GEN-LAST:event_btnPacienteActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // Instancia e exibe a tela principal
+        this.dispose();
+        DadosAgendamento agendamento = new DadosAgendamento(null);
+        agendamento.setVisible(true);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicoActionPerformed
+        this.dispose();
+        ListaMedico view = new ListaMedico();
+        view.setVisible(true);
+    }//GEN-LAST:event_btnMedicoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tabelaAgenda.getSelectedRow() != -1) {
+
+            if (tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4) == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um registro valido para editar.");
+                return;
+            }
+
+            int id = (int) tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4);
+            AgendamentoServico servico = new AgendamentoServico();
+            Agendamento agendamento = servico.obterPorId(id);
+            this.dispose();
+            DadosAgendamento view = new DadosAgendamento(agendamento);
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para editar.");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (tabelaAgenda.getSelectedRow() != -1) {
+
+            if (tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4) == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um registro valido para editar.");
+                return;
+            }
+
+            int id = (int) tabelaAgenda.getValueAt(tabelaAgenda.getSelectedRow(), 4);
+
+            int result = JOptionPane.showConfirmDialog(null, "Você confirma o cancelamento do Agendamento?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (result == JOptionPane.YES_OPTION) {
+                AgendamentoServico servico = new AgendamentoServico();
+                if (servico.cancelar(id)) {
+                    JOptionPane.showMessageDialog(null, "Agendamento cancelado com sucesso.");
+                    limparTabela();
+                    carregarAgendamentos(servico.filtrarPorData(this.dataAtual));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para cancelar.");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void botao_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cancelarActionPerformed
+        this.dispose();
+        Login login = new Login();
+        login.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_botao_cancelarActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        ListaUsuario view = new ListaUsuario();
+        view.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     /**
@@ -332,23 +489,21 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TextPesquisar;
-    private javax.swing.JButton btnAgenda;
+    private javax.swing.JButton botao_ag_pesquisa_data;
+    private javax.swing.JButton botao_cancelar;
     private javax.swing.JToggleButton btnConsulta;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JToggleButton btnMedico;
     private javax.swing.JButton btnNovo;
     private javax.swing.JToggleButton btnPaciente;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField campo_pesquisa_data;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton lupa;
     private javax.swing.JTable tabelaAgenda;
     // End of variables declaration//GEN-END:variables
 }

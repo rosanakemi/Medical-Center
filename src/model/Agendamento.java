@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,17 +16,13 @@ public class Agendamento {
     private int id;
     private Paciente paciente;
     private Medico medico;
-    private String especialidade;
-    private Date data;
-    private String Hora;
+    private Calendar dataHora;
     
-    public Agendamento(int id, Paciente paciente, Medico medico, String especialidade, Date data, String Hora){
+    public Agendamento(int id, Paciente paciente, Medico medico, Calendar dataHora){
         this.id = id;
         this.paciente = paciente;
         this.medico = medico;
-        this.especialidade = especialidade;
-        this.data = data;
-        this.Hora = Hora;
+        this.dataHora = dataHora;
     }
 
     public int getId() {
@@ -52,27 +49,17 @@ public class Agendamento {
         this.medico = medico;
     }
 
-    public String getEspecialidade() {
-        return especialidade;
+    /**
+     * @return the dataHora
+     */
+    public Calendar getDataHora() {
+        return dataHora;
     }
 
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public String getHora() {
-        return Hora;
-    }
-
-    public void setHora(String Hora) {
-        this.Hora = Hora;
-    }
+    /**
+     * @param dataHora the dataHora to set
+     */
+    public void setDataHora(Calendar dataHora) {
+        this.dataHora = dataHora;
+    }  
 }

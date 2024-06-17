@@ -5,28 +5,23 @@
 package model;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
  * @author zanna
  */
 public class Medico extends Pessoa {
-    
-    private int id;
     private String CRM;
-    private Usuario usuario;
     private String especialidades;
+    private String status;
     
-    public Medico(int id, String nome, String cpf, Date data_de_nascimento, String idade, String CRM, String usuario, String especialidades) {
-        super(id, nome, cpf, data_de_nascimento, idade);
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Medico(int id, String nome, String cpf, Date data_de_nascimento, String CRM, String especialidades,String status) {
+        super(id, nome, cpf, data_de_nascimento);
+        this.status = status;
+        this.CRM = CRM;
+        this.especialidades = especialidades;
+        this.status = status;
     }
 
     public String getCRM() {
@@ -37,14 +32,6 @@ public class Medico extends Pessoa {
         this.CRM = CRM;
     }
 
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public String getEspecialidades() {
         return this.especialidades;
     }
@@ -52,5 +39,36 @@ public class Medico extends Pessoa {
     public void setEspecialidades(String especialidades) {
         this.especialidades = especialidades;
     }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
+    @Override
+    public String toString(){
+        return this.getNome();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medico medico = (Medico) o;
+        return this.getId() == medico.getId() && this.getNome().equals(medico.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getNome(), this.getId());
+    }
 }
