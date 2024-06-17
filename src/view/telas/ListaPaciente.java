@@ -278,37 +278,44 @@ public class ListaPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
-        this.dispose();
-        DadosPaciente cadastroView = new DadosPaciente(null);
+        this.dispose();// Fecha a janela atual
+        DadosPaciente cadastroView = new DadosPaciente(null);// Abre a tela de cadastro de paciente
         cadastroView.setVisible(true);
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+        // Verifica se o campo de pesquisa está vazio
         if (campo_pesquisa.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo de pesquisa vazio");
             // Define o foco no campo de nome para o usuário preencher
             campo_pesquisa.requestFocus();
             return;
         }
-
+        // Cria uma instância do serviço de paciente e filtra os pacientes
         PacienteServico servico = new PacienteServico();
         ArrayList<Paciente> pacientes = servico.filtrar(campo_pesquisa.getText());
+        // Carrega os pacientes na tabela
         carregarPacientesNaTabela(pacientes);
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // Limpa o texto do campo de pesquisa
         campo_pesquisa.setText("");
+        // Consulta todos os pacientes e carrega na tabela
         PacienteServico servico = new PacienteServico();
         ArrayList<Paciente> pacientes = servico.consultarTodos();
         carregarPacientesNaTabela(pacientes);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
+        // Verifica se uma linha da tabela está selecionada
         if (jTPaciente.getSelectedRow() != -1) {
+            // Obtém o ID do paciente selecionado na tabela
             int id = (int) jTPaciente.getValueAt(jTPaciente.getSelectedRow(), 0);
-
+            // Solicita confirmação do usuário para exclusão
             int confirmacao = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja deletar este registro?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (confirmacao == JOptionPane.YES_OPTION) {
+                // Exclui o paciente e atualiza a tabela
                 PacienteServico servico = new PacienteServico();
                 servico.deletar(id);
                 JOptionPane.showMessageDialog(null, "Paciente removido com sucesso.");

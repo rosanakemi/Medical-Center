@@ -22,11 +22,12 @@ public class ListaUsuario extends javax.swing.JFrame {
      */
     public ListaUsuario() {
         initComponents();
-
+        // Obtém o modelo da tabela e define um sorter para ordenação das linhas
         DefaultTableModel modelo = (DefaultTableModel) jTUsuario.getModel();
         jTUsuario.setRowSorter(new TableRowSorter(modelo));
-
+        // Cria uma instância do serviço de usuário para consultar os dados
         UsuarioServico servico = new UsuarioServico();
+        // Carrega os usuários na tabela
         carregarUsuariosNaTabela(servico.consultarTodos());
     }
 
@@ -34,14 +35,15 @@ public class ListaUsuario extends javax.swing.JFrame {
         // Limpar dados da Tabela
         DefaultTableModel modelo = (DefaultTableModel) jTUsuario.getModel();
         modelo.setNumRows(0);
-
+        // Verifica se a lista não é nula
         if (list != null) {
+            // Adiciona cada usuário da lista como uma nova linha na tabela
             for (Usuario p : list) {
 
                 modelo.addRow(new Object[]{
-                    p.getId(),
-                    p.getLogin(),
-                    p.getSenha(),
+                    p.getId(),// Coluna ID
+                    p.getLogin(),// Coluna Login
+                    p.getSenha(),// Coluna Senha
                 });
             }
         }
